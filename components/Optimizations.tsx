@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import clsx from "clsx";
 import useInView from "@/hooks/useInView";
 import styles from "./Optimizations.module.css";
@@ -16,23 +16,21 @@ const Optimizations = () => {
   const [optimized, setOptimized] = useState(true);
   const { ref, inView } = useInView();
   const contentRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const [contentH, setContentH] = useState<number>(0);
 
-  const measure = useCallback(() => {
-    if (innerRef.current) {
-      setContentH(innerRef.current.scrollHeight);
+  const handleToggle = () => {
+    const el = contentRef.current;
+    if (el) {
+      el.style.maxHeight = el.scrollHeight + "px";
     }
-  }, []);
+    setOptimized((v) => !v);
+  };
 
-  useEffect(() => {
-    measure();
-  }, [optimized, measure]);
-
-  useEffect(() => {
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
+  useLayoutEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    void el.offsetHeight;
+    el.style.maxHeight = el.scrollHeight + "px";
+  }, [optimized]);
 
   return (
     <section
@@ -54,7 +52,7 @@ const Optimizations = () => {
 
       <button
         className={clsx(styles["toggle"], { [styles["toggle-off"]]: !optimized })}
-        onClick={() => setOptimized((v) => !v)}
+        onClick={handleToggle}
       >
         <span className={styles["toggle-knob"]} />
         <span className={styles["toggle-label"]}>
@@ -65,9 +63,7 @@ const Optimizations = () => {
       <div
         ref={contentRef}
         className={styles["content-area"]}
-        style={{ maxHeight: contentH }}
       >
-        <div ref={innerRef}>
           {optimized ? (
           <div className={styles["techniques"]}>
             <p className={styles["techniques-label"]}>적용된 최적화 기법</p>
@@ -105,7 +101,6 @@ const Optimizations = () => {
             </p>
           </div>
         )}
-        </div>
       </div>
     </section>
   );
