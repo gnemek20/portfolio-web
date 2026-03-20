@@ -5,6 +5,18 @@ export interface Optimization {
   after: string;
 }
 
+export interface ContentBlock {
+  type: "text" | "image" | "stats";
+  value: string;
+  alt?: string;
+  caption?: string;
+}
+
+export interface AccordionTab {
+  title: string;
+  blocks: ContentBlock[];
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -16,6 +28,7 @@ export interface Project {
   highlights: string[];
   architecture?: string;
   optimizations?: Optimization[];
+  accordions?: AccordionTab[];
   links: { github?: string; live?: string };
 }
 
@@ -46,6 +59,100 @@ export const projects: Project[] = [
     ],
     architecture:
       "front/ → Next.js 15 (Pages Router) + WASM + Web Workers\nback/ → FastAPI + OpenCV + NumPy (이미지 기반 스킬 매칭)",
+    accordions: [
+      {
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "사용자는 직업군과 직업을 선택한 뒤, 강화할 스킬과 중첩 수를 설정합니다. 이후 화면 공유·캡처 또는 파일 첨부로 코어 강화 테이블 이미지를 삽입하면, 서버가 이미지를 분석해 보유 코어 목록을 추출합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/코강도우미 화면 구조.webp",
+            alt: "Core Helper 메인 화면 구조",
+            caption: "직업 선택 → 스킬 설정 → 이미지 삽입까지의 메인 인터페이스",
+          },
+          {
+            type: "text",
+            value: "서버 분석이 완료되면 클라이언트에서 WebAssembly 기반 DFS 솔버가 즉시 실행되어, 선택한 스킬 조합을 충족하는 최적의 코어 배치를 산출합니다. 결과는 메인 스킬 기준으로 인덱싱되어 경험치 효율이 높은 순서로 정렬됩니다.",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/코강도우미 결과.webp",
+            alt: "Core Helper 분석 결과",
+            caption: "최적 코어 조합이 메인 스킬 기준으로 정렬된 결과 화면",
+          },
+          {
+            type: "text",
+            value: "아래는 다양한 직업군과 조건에서의 실행 예시입니다. 직업·스킬 수·보유 코어에 따라 결과가 달라지며, 대부분의 케이스에서 수 초 이내에 최적 조합을 도출합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/실행예시1.webp",
+            alt: "실행 예시 1",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/실행예시2.webp",
+            alt: "실행 예시 2",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/실행예시3.webp",
+            alt: "실행 예시 3",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/실행예시4.webp",
+            alt: "실행 예시 4",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/실행예시5.webp",
+            alt: "실행 예시 5",
+          },
+        ],
+      },
+      {
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "서버는 사용자가 첨부한 코어 강화 테이블 이미지를 OpenCV와 NumPy로 분석합니다. 먼저 HSV 색공간 변환과 bilateralFilter로 노이즈를 제거한 뒤, 마스킹과 윤곽선 검출(findContours)로 개별 코어 영역을 정사각형으로 크롭합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/백엔드 디스플레이 분석.webp",
+            alt: "백엔드 디스플레이 분석 과정",
+            caption: "HSV 마스킹 → 윤곽선 검출 → 코어 영역 크롭까지의 분석 파이프라인",
+          },
+          {
+            type: "text",
+            value: "크롭된 코어 아이콘은 좌측 사다리꼴·중앙 삼각형·우측 사다리꼴의 3파트로 분할됩니다. 각 파트를 500개 이상의 스킬 템플릿과 matchTemplate(TM_CCOEFF_NORMED)으로 대조하여 유사도 0.625 이상인 스킬을 매칭합니다. 마스크 기반 템플릿 매칭으로 배경 간섭을 제거하고, 3파트 합산 검증으로 오탐을 최소화합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/core-helper/백엔드 코어 분석.webp",
+            alt: "백엔드 코어 스킬 분석 과정",
+            caption: "코어 아이콘 3파트 분할 → 템플릿 매칭으로 스킬 구조 식별",
+          },
+          {
+            type: "text",
+            value: "클라이언트에서는 서버가 반환한 코어 목록을 받아, 메인 스킬 기준으로 그룹화하고 레벨 순으로 정렬합니다. 이후 C로 작성된 WebAssembly 모듈이 Web Worker 내에서 DFS 백트래킹을 수행합니다.\n\ncandidates는 메인 스킬이 중복되지 않는 코어의 인덱스 배열입니다. 각 배열에서 하나씩 요소를 추출하고, 해당 조합이 유효한지 검사하여 유효 조합을 즉시 반환합니다. 사람이 직접 계산하면 최소 15분 이상 걸리는 NP-hard 집합 커버 문제를, WebAssembly + 정수 매핑 + flat array 구조로 평균 수 ms ~ 3초 내에 해결합니다.",
+          },
+          {
+            type: "stats",
+            value: "서비스 최적화 히스토리",
+            caption: [
+              "이미지 분석 — 초기 matchTemplate 전수 탐색 시 최종 분석까지 최장 5분 소요 → YOLOv8n AI 모델 도입으로 2~5초까지 단축했으나, 무료 리소스 환경에서 메모리 덤프와 cold start 로드 비용 8초가 병목 → 최종적으로 grayscale 2채널 + 마스킹·윤곽선·정사각형 보정 로직으로 matchTemplate을 최소화하여 평균 5~15초, 최장 25초로 안정화 (초기 대비 92% 단축)",
+              "조합 연산 — 초기 서버 측 DFS 연산으로 서버 응답 30초 이상 → 클라이언트 JS 전환 시 평균 20초, 예외 케이스 5분 → 인덱싱 조건 최적화 + C → WebAssembly 전환으로 평균 ms~3초, 최장 10초 이내 산출 (초기 대비 99% 단축)",
+              "배포 인프라 — CloudType 배포 시 서버 연결 300ms → Fly.io(nrt 리전) 전환으로 20~25ms로 단축 (92% 감소) → VM cpu/memory 최적 할당 + Docker worker 튜닝으로 여름 피크 트래픽(일 5,700회) 시에도 안정적 서비스 유지",
+            ].join("\n"),
+          },
+        ],
+      },
+    ],
     links: {
       github: "https://github.com/teacher-sora/core-helper-front",
       live: "https://www.core-helper.site/",

@@ -307,6 +307,136 @@
   border-radius: 5px;
 }
 
+/* Accordion tabs */
+
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.accordion {
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: background var(--transition);
+}
+
+.accordion-trigger:hover {
+  background: var(--bg-warm);
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.accordion-chevron {
+  font-size: 1.125rem;
+  color: var(--text-tertiary);
+  transition: transform 300ms ease;
+  display: inline-block;
+}
+
+.accordion-open .accordion-chevron {
+  transform: rotate(90deg);
+}
+
+.accordion-body {
+  height: 0;
+  overflow: hidden;
+  transition: height 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-content {
+  padding: 0 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.accordion-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.accordion-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.accordion-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.accordion-img {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.accordion-caption {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.accordion-stats {
+  background: var(--bg-warm);
+  border-radius: 5px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.accordion-stats-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.accordion-stat-line {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-left: 0.75rem;
+  position: relative;
+}
+
+.accordion-stat-line::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.accordion-stat-line strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
 @media (max-width: 640px) {
   .overlay {
     padding: 1rem;

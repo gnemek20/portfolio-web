@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import clsx from "clsx";
-import { Project, Optimization } from "@/data/projects";
+import { Project, Optimization, AccordionTab } from "@/data/projects";
 import styles from "./ProjectDialog.module.css";
 
 const KEYWORDS = [
@@ -14,6 +14,10 @@ const KEYWORDS = [
   "Screen Capture API", "Next.js", "FastAPI", "Vue",
   "Google AdSense", "Naver Maps API", "Soniox API",
   "CEFR", "rehype-sanitize",
+  "OpenCV", "NumPy", "HSV", "bilateralFilter", "findContours",
+  "matchTemplate", "TM_CCOEFF_NORMED", "YOLOv8n",
+  "Fly.io", "CloudType", "NP-hard",
+  "grayscale", "cold start",
 ];
 
 const highlightKeywords = (text: string) => {
@@ -63,6 +67,83 @@ const OptToggle = ({ opt }: { opt: Optimization }) => {
       <pre className={styles["opt-code"]}>
         {view === "before" ? opt.before : opt.after}
       </pre>
+    </div>
+  );
+};
+
+const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
+  const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    if (!expanded || !contentRef.current) {
+      setHeight(0);
+      return;
+    }
+    setHeight(contentRef.current.scrollHeight);
+
+    const ro = new ResizeObserver(() => {
+      if (contentRef.current) setHeight(contentRef.current.scrollHeight);
+    });
+    ro.observe(contentRef.current);
+    return () => ro.disconnect();
+  }, [expanded]);
+
+  return (
+    <div className={styles["accordion"]}>
+      <button
+        className={clsx(styles["accordion-trigger"], { [styles["accordion-open"]]: expanded })}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+      >
+        <span className={styles["accordion-title"]}>{tab.title}</span>
+        <span className={styles["accordion-chevron"]}>›</span>
+      </button>
+      <div
+        className={styles["accordion-body"]}
+        style={{ height: expanded ? height : 0 }}
+      >
+        <div ref={contentRef} className={styles["accordion-content"]}>
+          {tab.blocks.map((block, i) => {
+            if (block.type === "image") {
+              return (
+                <figure key={i} className={styles["accordion-figure"]}>
+                  <img
+                    src={block.value}
+                    alt={block.alt ?? ""}
+                    loading="lazy"
+                    decoding="async"
+                    className={styles["accordion-img"]}
+                  />
+                  {block.caption && (
+                    <figcaption className={styles["accordion-caption"]}>
+                      {block.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            }
+            if (block.type === "stats") {
+              return (
+                <div key={i} className={styles["accordion-stats"]}>
+                  <p className={styles["accordion-stats-title"]}>{block.value}</p>
+                  {block.caption?.split("\n").map((line, j) => (
+                    <p key={j} className={styles["accordion-stat-line"]}>
+                      {highlightKeywords(line)}
+                    </p>
+                  ))}
+                </div>
+              );
+            }
+            return (
+              <p key={i} className={styles["accordion-text"]}>
+                {highlightKeywords(block.value)}
+              </p>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
@@ -166,6 +247,14 @@ const ProjectDialog = ({ project, onClose }: Props) => {
                 ))}
               </div>
             </>
+          )}
+
+          {displayed.accordions && displayed.accordions.length > 0 && (
+            <div className={styles["accordion-list"]}>
+              {displayed.accordions.map((tab, i) => (
+                <AccordionPanel key={i} tab={tab} />
+              ))}
+            </div>
           )}
 
           <div className={styles["dialog-links"]}>
