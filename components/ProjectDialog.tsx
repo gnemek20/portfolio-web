@@ -34,6 +34,23 @@ const highlightKeywords = (text: string) => {
   );
 };
 
+const highlightStats = (text: string) => {
+  const escaped = KEYWORDS.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const pattern = new RegExp(`(${escaped.join("|")}|\\d+%\\s*\\S+)`, "g");
+  const parts = text.split(pattern);
+
+  return parts.map((part, i) => {
+    if (!part) return null;
+    if (/^\d+%/.test(part))
+      return <span key={i} className={styles["stat-accent"]}>{part}</span>;
+    if (pattern.test(part)) {
+      pattern.lastIndex = 0;
+      return <strong key={i}>{part}</strong>;
+    }
+    return part;
+  });
+};
+
 interface Props {
   project: Project | null;
   onClose: () => void;
@@ -71,6 +88,8 @@ const OptToggle = ({ opt }: { opt: Optimization }) => {
   );
 };
 
+const PEEK_HEIGHT = 60;
+
 const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -91,7 +110,7 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
   }, [expanded]);
 
   return (
-    <div className={styles["accordion"]}>
+    <div className={clsx(styles["accordion"], { [styles["accordion-expanded"]]: expanded })}>
       <button
         className={clsx(styles["accordion-trigger"], { [styles["accordion-open"]]: expanded })}
         onClick={() => setExpanded((v) => !v)}
@@ -102,8 +121,9 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
       </button>
       <div
         className={styles["accordion-body"]}
-        style={{ height: expanded ? height : 0 }}
+        style={{ height: expanded ? height : PEEK_HEIGHT }}
       >
+        {!expanded && <div className={styles["accordion-fade"]} />}
         <div ref={contentRef} className={styles["accordion-content"]}>
           {tab.blocks.map((block, i) => {
             if (block.type === "image") {
@@ -133,7 +153,7 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
                       key={j}
                       className={line.startsWith("→") ? styles["accordion-stat-sub"] : styles["accordion-stat-line"]}
                     >
-                      {highlightKeywords(line)}
+                      {highlightStats(line)}
                     </p>
                   ))}
                 </div>

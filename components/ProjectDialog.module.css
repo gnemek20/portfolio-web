@@ -359,6 +359,18 @@
   height: 0;
   overflow: hidden;
   transition: height 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.accordion-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 90%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .accordion-content {
@@ -445,6 +457,11 @@
 .accordion-stat-line strong {
   color: var(--text-primary);
   font-weight: 600;
+}
+
+.stat-accent {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 @media (max-width: 640px) {
