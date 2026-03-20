@@ -32,12 +32,12 @@ const Optimizations = () => {
       id="optimizations"
     >
       <p className={styles["section-label"]}>Optimization</p>
-      <h2 className={styles["section-title"]}>
+      <h2 className={clsx(styles["section-title"], { [styles["text-fade-out"]]: fading })}>
         {optimized
           ? "이 포트폴리오는 극한까지 최적화되었습니다"
           : "최적화가 비활성화되었습니다"}
       </h2>
-      <p className={styles["section-desc"]}>
+      <p className={clsx(styles["section-desc"], { [styles["text-fade-out"]]: fading })}>
         {optimized
           ? "SSG, 코드 스플리팅, 번들 최소화를 적용하여 최상의 Lighthouse 점수를 달성했습니다"
           : "아래 수치는 최적화 미적용 시 예상되는 성능 저하입니다"}

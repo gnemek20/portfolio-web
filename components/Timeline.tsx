@@ -7,7 +7,7 @@ const events = [
     period: "2022. 01 — 04",
     title: "에이비제트 주식회사",
     desc: "Vue JS 인포크스토어 판매자센터, React JS 인포크링크 회원가입 페이지 제작",
-    tag: "정규직",
+    tag: "계약직",
   },
   {
     period: "2023. 01 — 04",
@@ -42,7 +42,7 @@ const events = [
 ];
 
 const tagColor: Record<string, string> = {
-  "정규직": "tag-work",
+  "계약직": "tag-work",
   "외주": "tag-outsource",
   "수상": "tag-award",
   "개인": "tag-personal",

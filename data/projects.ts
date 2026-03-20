@@ -10,6 +10,7 @@ export interface Project {
   title: string;
   subtitle: string;
   category: "개인" | "외주" | "팀";
+  period?: string;
   description: string;
   tags: string[];
   highlights: string[];
@@ -75,6 +76,7 @@ export const projects: Project[] = [
     title: "Hyunwoo AI",
     subtitle: "3D 지식 온톨로지 시각화 플랫폼",
     category: "외주",
+    period: "2025. 10 — 2026. 01",
     description: [
       "Three.js의 3D 객체 탐색을 통해 사용자의 생각을 우주 공간에서 살펴볼 수 있는 사이트입니다. 관리자는 어드민 페이지에서 데이터를 관리하거나, knowledge-ontology-engine 레포지토리에 main push로 데이터를 관리할 수 있습니다.",
       "",
@@ -154,6 +156,7 @@ const updateMeshScale = (mesh, camera) => {
     title: "DaeyangING",
     subtitle: "패션 부자재 기업 소개 홈페이지",
     category: "외주",
+    period: "2024. 06 — 2025. 01",
     description: [
       "지퍼·풀러 전문 패션 부자재 기업 대양 ING의 공식 홈페이지입니다. 초안을 완성하였으나 의뢰처의 사정으로 무산된 프로젝트입니다.",
       "",
@@ -213,6 +216,7 @@ const WelcomeAnimation = dynamic(
     title: "WAAT",
     subtitle: "AI 데이터 전처리 자동화 도구",
     category: "외주",
+    period: "2023. 01 — 04",
     description: [
       "한양대학교 컴퓨테이셔널사회과학연구센터의 요청으로 제작된 데이터 전처리 자동화 도구입니다.",
       "",

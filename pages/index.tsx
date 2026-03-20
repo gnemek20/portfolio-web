@@ -22,7 +22,9 @@ const Home = () => {
         <Projects onSelect={setSelectedProject} />
       </div>
       <Timeline />
-      <Optimizations />
+      <div className={styles["warm-bg"]}>
+        <Optimizations />
+      </div>
       <Contact />
       <ProjectDialog
         project={selectedProject}

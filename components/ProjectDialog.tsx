@@ -125,6 +125,13 @@ const ProjectDialog = ({ project, onClose }: Props) => {
           <h2 className={styles["dialog-title"]}>{displayed.title}</h2>
           <p className={styles["dialog-subtitle"]}>{displayed.subtitle}</p>
 
+          {displayed.period && (
+            <div className={styles["dialog-period"]}>
+              <span className={styles["dialog-period-icon"]}>📅</span>
+              <span className={styles["dialog-period-text"]}>{displayed.period}</span>
+            </div>
+          )}
+
           <div className={styles["dialog-tags"]}>
             {displayed.tags.map((tag) => (
               <span key={tag} className={styles["dialog-tag"]}>{tag}</span>
