@@ -83,8 +83,6 @@ export const projects: Project[] = [
       "React Three Fiber 없이 Raw Three.js로 약 2,200줄 이상의 커스텀 씬 그래프 엔진을 직접 구축했으며, 4개의 커스텀 모델 로더(Brain, Human, Milkyway, Star)와 BufferGeometry 기반 동적 Vertex Coloring 시스템을 구현했습니다.",
       "",
       "이진 공간 분할(좌반구/우반구)에 따라 정점 색상을 차등 적용하는 방식으로, D3나 Cytoscape 없이 O(n) 복잡도의 자체 TreeLayout 알고리즘으로 계층적 노드 배치를 처리합니다.",
-      "",
-      "RAG 기반 AI 채팅은 Server-Sent Events 스트리밍으로 실시간 응답하며, KaTeX + react-markdown으로 수학 수식 렌더링을 지원합니다.",
     ].join("\n"),
     tags: ["Next.js 14", "Three.js 0.180", "TypeScript", "FastAPI", "PostgreSQL"],
     highlights: [
@@ -95,7 +93,6 @@ export const projects: Project[] = [
       "Dual Renderer — WebGLRenderer + CSS3DRenderer 동시 운용",
       "프랙탈 줌 — 로그 보간(logarithmic interpolation) 카메라 네비게이션",
       "Git-as-Database — Markdown → GitHub Actions → DB 동기화 파이프라인",
-      "RAG 기반 AI 채팅 (SSE 스트리밍 + KaTeX 수식 렌더링)",
     ],
     architecture:
       "front/ → Next.js 14 (Pages Router) + Raw Three.js + TreeContext\nback/ → FastAPI + asyncpg (PostgreSQL)\nknowledge-ontology-engine/ → Markdown 지식 그래프 (GitHub Actions CI/CD)",

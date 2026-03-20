@@ -93,14 +93,17 @@ const ProjectDialog = ({ project, onClose }: Props) => {
     if (!displayed) return;
 
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const header = document.querySelector("header");
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
     document.body.style.paddingRight = `${scrollbarWidth}px`;
+    if (header) header.style.paddingRight = `calc(2rem + ${scrollbarWidth}px)`;
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
       document.body.style.paddingRight = "";
+      if (header) header.style.paddingRight = "";
     };
   }, [displayed, handleKeyDown]);
 
