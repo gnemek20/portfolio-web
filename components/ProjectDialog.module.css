@@ -422,6 +422,7 @@
   line-height: 1.7;
   padding-left: 0.75rem;
   position: relative;
+  white-space: pre-line;
 }
 
 .accordion-stat-line::before {
