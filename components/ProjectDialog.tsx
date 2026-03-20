@@ -226,10 +226,34 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
             if (block.type === "gif") {
               return <GifPlayer key={i} block={block} expanded={expanded} />;
             }
-            if (block.type === "code") {
+            if (block.type === "table" && block.tables) {
               return (
                 <figure key={i} className={styles["accordion-figure"]}>
-                  <pre className={styles["accordion-code"]}><code>{block.value}</code></pre>
+                  {block.tables.map((table, ti) => (
+                    <div key={ti} className={styles["accordion-table-wrap"]}>
+                      <p className={styles["accordion-table-title"]}>{table.title}</p>
+                      <div className={styles["accordion-table-scroll"]}>
+                        <table className={styles["accordion-table"]}>
+                          <thead>
+                            <tr>
+                              {table.headers.map((h, hi) => (
+                                <th key={hi}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {table.rows.map((row, ri) => (
+                              <tr key={ri}>
+                                {row.map((cell, ci) => (
+                                  <td key={ci}>{cell}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  ))}
                   {block.caption && (
                     <figcaption className={styles["accordion-caption"]}>
                       {block.caption}

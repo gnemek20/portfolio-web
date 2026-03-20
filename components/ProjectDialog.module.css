@@ -437,18 +437,49 @@
   line-height: 1.5;
 }
 
-.accordion-code {
-  font-family: "Consolas", "Menlo", monospace;
+.accordion-table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.accordion-table-title {
   font-size: 0.75rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  background: var(--bg-warm);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.accordion-table-scroll {
   overflow-x: auto;
-  white-space: pre;
-  margin: 0;
+}
+
+.accordion-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.accordion-table th,
+.accordion-table td {
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  color: var(--text-secondary);
+  white-space: pre-line;
+}
+
+.accordion-table th {
+  background: var(--bg-warm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.accordion-table td:first-child {
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
 }
 
 .accordion-stats {

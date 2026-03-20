@@ -1,8 +1,13 @@
 export interface ContentBlock {
-  type: "text" | "image" | "stats" | "gif" | "code";
+  type: "text" | "image" | "stats" | "gif" | "table";
   value: string;
   alt?: string;
   caption?: string;
+  tables?: {
+    title: string;
+    headers: string[];
+    rows: string[][];
+  }[];
 }
 
 export interface AccordionTab {
@@ -335,32 +340,32 @@ export const projects: Project[] = [
             value: "Ontology 데이터는 부모-자식 관계의 깊이를 예측할 수 없는 재귀적 구조입니다. Fly.io에 배포된 PostgreSQL에 온톨로지 포맷으로 저장된 플랫한 레코드를 재귀적으로 탐색하여 Tree 구조로 변환하고, Tree의 노드 조작을 다시 Ontology 포맷으로 역변환하는 양방향 변환 로직을 구현했습니다. 어드민에서 변경 사항을 저장하면 기존 온톨로지와의 diff를 산출하여 inserted·deleted·updated 단위로 데이터베이스에 영속화합니다.",
           },
           {
-            type: "code",
-            value: [
-              "nodes",
-              "┌──────────────┬───────────────────┬────────────────────┬───────────────────────┐",
-              "│ id           │ name              │ description        │ tags                  │",
-              "├──────────────┼───────────────────┼────────────────────┼───────────────────────┤",
-              "│ 2358139b...  │ NeoVim            │ ### Prerequisites  │ {neovim,lua,AI,Tools} │",
-              "│              │                   │ * Neovim v0.10.0~  │                       │",
-              "│              │                   │ * Nerd Font ...    │                       │",
-              "│ ee2f9cae...  │ Tools             │ - NeoVim           │ {}                    │",
-              "│ 630e48ec...  │ Triton server     │                    │ {Serving}             │",
-              "│ 94d303f1...  │ vLLM              │                    │ {Serving,LLM}         │",
-              "│ 25cabb8b...  │ Normalizing Flows │ Paper: Real NVP    │ {}                    │",
-              "└──────────────┴───────────────────┴────────────────────┴───────────────────────┘",
-              "",
-              "relations",
-              "┌──────────────┬──────────────┬────────┐",
-              "│ from_        │ to_          │ type   │",
-              "├──────────────┼──────────────┼────────┤",
-              "│ ee2f9cae...  │ 2358139b...  │ parent │  Tools -> NeoVim",
-              "│ idLeft       │ ee2f9cae...  │ parent │  root  -> Tools",
-              "│ 54edd916...  │ 630e48ec...  │ parent │",
-              "│ 54edd916...  │ 94d303f1...  │ parent │",
-              "│ 54edd916...  │ 25cabb8b...  │ parent │",
-              "└──────────────┴──────────────┴────────┘",
-            ].join("\n"),
+            type: "table",
+            value: "",
+            tables: [
+              {
+                title: "nodes",
+                headers: ["id", "name", "description", "tags"],
+                rows: [
+                  ["2358139b...", "NeoVim", "### Prerequisites\n* Neovim v0.10.0~\n* Nerd Font ...", "{neovim,lua,AI,Tools}"],
+                  ["ee2f9cae...", "Tools", "- NeoVim", "{}"],
+                  ["630e48ec...", "Triton server", "", "{Serving}"],
+                  ["94d303f1...", "vLLM", "", "{Serving,LLM}"],
+                  ["25cabb8b...", "Normalizing Flows", "Paper: Real NVP", "{}"],
+                ],
+              },
+              {
+                title: "relations",
+                headers: ["from_", "to_", "type", ""],
+                rows: [
+                  ["ee2f9cae...", "2358139b...", "parent", "Tools \u2192 NeoVim"],
+                  ["idLeft", "ee2f9cae...", "parent", "root \u2192 Tools"],
+                  ["54edd916...", "630e48ec...", "parent", ""],
+                  ["54edd916...", "94d303f1...", "parent", ""],
+                  ["54edd916...", "25cabb8b...", "parent", ""],
+                ],
+              },
+            ],
             caption: "nodes 테이블에 마크다운 기반 description과 태그를 저장하고, relations 테이블로 부모-자식 온톨로지를 표현",
           },
           {
