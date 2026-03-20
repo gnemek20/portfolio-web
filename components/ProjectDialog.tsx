@@ -20,6 +20,9 @@ const KEYWORDS = [
   "grayscale", "cold start",
   "Nodemailer", "Base64", "observeElement",
   "animationCounter", "playAnimation",
+  "PostgreSQL", "GitHub Actions", "TreeContext",
+  "TetrahedronGeometry", "SphereGeometry",
+  "CSS3DRenderer", "WebGLRenderer", "lerp",
 ];
 
 const highlightKeywords = (text: string) => {

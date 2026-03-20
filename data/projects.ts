@@ -241,6 +241,106 @@ export const projects: Project[] = [
     ],
     architecture:
       "front/ → Next.js 14 (Pages Router) + Raw Three.js + TreeContext\nback/ → FastAPI + asyncpg (PostgreSQL)\nknowledge-ontology-engine/ → Markdown 지식 그래프 (GitHub Actions CI/CD)",
+    accordions: [
+      {
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "최초 로드 시 상단 카탈로그 패널을 닫으면 3D 공간을 탐색할 수 있습니다. 사람 → 뇌 → 노드 → 하위 노드 순으로 점진적으로 깊이 들어가며, 각 단계 전환 시 opacity 보간으로 부드럽게 페이드됩니다.",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/Hyunwoo AI 화면 구조1.webp",
+            alt: "Hyunwoo AI 3D 공간 탐색",
+            caption: "사람 모델에서 뇌 모델, 그리고 지식 노드로 이어지는 3D 공간 구조",
+          },
+          {
+            type: "text",
+            value: "각 노드는 마우스 클릭으로 직접 선택하거나, 좌측 네비게이터에서 자식 노드 목록을 통해 이동할 수 있습니다. 우측 하단의 미니맵에서는 전체 트리 구조를 SVG로 시각화하여 현재 위치를 확인할 수 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/Hyunwoo AI 화면 구조2.webp",
+            alt: "Hyunwoo AI 노드 탐색 UI",
+            caption: "노드 클릭 → 좌측 네비게이터 + 우측 하단 미니맵으로 현재 위치 확인",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/지도.webp",
+            alt: "미니맵",
+            caption: "SVG 기반 미니맵 — 레벨별 80px 간격의 트리 레이아웃으로 전체 구조를 시각화",
+          },
+          {
+            type: "text",
+            value: "같은 태그를 가진 노드들은 흰색 선으로 연결되며, 상단 카탈로그 패널에서 태그 필터를 통해 관련 노드들의 마크다운 설명을 확인할 수 있습니다. 자식이 있는 노드는 울퉁불퉁한 모양(TetrahedronGeometry), 끝 노드는 매끔한 원(SphereGeometry)으로 구분됩니다.",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/카탈로그.webp",
+            alt: "카탈로그 패널",
+            caption: "태그 필터 → 노드 선택 → 마크다운 설명 확인이 가능한 카탈로그 패널",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/Hyunwoo AI 화면 구조3.webp",
+            alt: "Hyunwoo AI 노드 내부",
+            caption: "노드 내부로 진입한 모습 — 하위 노드들이 3D 공간에 배치됨",
+          },
+          {
+            type: "text",
+            value: "어드민 페이지에서는 로그인 후 JWT 토큰을 발급받아 온톨로지를 트리 형태로 관리할 수 있습니다. 노드의 추가·수정·제거 변경 사항은 Status 패널에서 색상별로 확인할 수 있으며, Ctrl+S 또는 Save 버튼으로 Fly.io에 배포된 PostgreSQL 데이터베이스에 였속화합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/어드민 화면 구조1.webp",
+            alt: "어드민 트리 에디터",
+            caption: "온톨로지 트리 에디터 — 노드의 부모·자식·태그를 자유롭게 관리",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/어드민 화면 구조2.webp",
+            alt: "어드민 Status 패널",
+            caption: "Status 패널 — 추가(초록)·수정(노랑)·제거(빨강) 변경 사항 확인 및 revoke 가능",
+          },
+          {
+            type: "image",
+            value: "/references/hyunwoo-ai/저장 메시지.webp",
+            alt: "저장 성공 메시지",
+            caption: "Ctrl+S 또는 Save 버튼으로 데이터베이스에 온톨로지 저장 시 확인 메시지",
+          },
+        ],
+      },
+      {
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "3D 공간의 카메라는 구면 좌표계(theta, phi) 기반의 커스텀 컨트롤러로 제어됩니다. 마우스 드래그로 회전하고, 휠 줄은 로그 스케일(Math.exp) 기반 프랙탈 줄을 적용하여 어떤 배율에서도 일정한 속도감을 유지합니다. 모든 변화는 매 프레임 lerp 보간으로 부드럽게 전환됩니다.",
+          },
+          {
+            type: "text",
+            value: "WebGLRenderer는 3D 모델과 노드 메쉬를 렌더링하고, CSS3DRenderer는 항상 카메라를 향해 바라보는 텍스트 레이블을 처리합니다. Dual Renderer를 동시 운용하여 텍스트는 어떤 시점에서도 가독성을 유지합니다.",
+          },
+          {
+            type: "text",
+            value: "노드 배치는 Poisson 유사 구면 분포 알고리즘을 사용합니다. 구면 좌표로 랜덤 위치를 생성한 뒤 Math.cbrt로 균일 분포를 보정하고, 최소 간격 조건을 만족할 때까지 최대 50회 재시도(rejection sampling)하여 겨침 없이 배치합니다.",
+          },
+          {
+            type: "text",
+            value: "Ontology 데이터는 부모-자식 관계의 깊이를 예측할 수 없는 재귀적 구조입니다. Fly.io에 배포된 PostgreSQL에 온톨로지 포맷으로 저장된 플랫한 레코드를 재귀적으로 탐색하여 Tree 구조로 변환하고, Tree의 노드 조작을 다시 Ontology 포맷으로 역변환하는 양방향 변환 로직을 구현했습니다. 어드민에서 변경 사항을 저장하면 기존 온톨로지와의 diff를 산출하여 inserted·deleted·updated 단위로 데이터베이스에 였속화합니다.",
+          },
+          {
+            type: "text",
+            value: "3D 페이지에서는 데이터베이스의 전체 노드를 초기에 가져오되, 모든 섹션을 한 번에 생성하지 않습니다. 사용자가 노드 내부에 접근할 때 해당 깊이의 섹션을 동적으로 생성(lazy section creation)하여, 예측할 수 없는 깊이의 재귀적 데이터에 대응하면서도 초기 로드 성능을 유지합니다. 줄 레벨이 일정 범위에 도달하면 다음 섹션을 생성하고 opacity 보간으로 전환합니다.",
+          },
+          {
+            type: "text",
+            value: "knowledge-ontology-engine 레포지토리에 마크다운 파일을 추가하고 main에 push하면, GitHub Actions 워크플로우가 데이터를 checkout한 뒤 백엔드 엔드포인트를 실행하여 데이터베이스에 자동 동기화합니다. 이를 통해 데이터 관리를 AI 에이전트에게 일임할 수도 있습니다.",
+          },
+        ],
+      },
+    ],
     links: {
       live: "https://www.hyunwoo.ai/",
     },
