@@ -27,7 +27,6 @@
   font-weight: 700;
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
-  word-break: keep-all;
   opacity: 1;
   transition: opacity 250ms ease-in-out;
 }
@@ -39,7 +38,6 @@
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
-  word-break: keep-all;
   opacity: 1;
   transition: opacity 250ms ease-in-out;
 }
@@ -141,7 +139,6 @@
   color: var(--text-secondary);
   margin-left: auto;
   text-align: right;
-  word-break: keep-all;
 }
 
 .warning-area {
@@ -191,7 +188,6 @@
   font-size: 0.8125rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  word-break: keep-all;
 }
 
 @keyframes fade-in {

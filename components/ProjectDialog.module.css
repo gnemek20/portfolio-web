@@ -148,7 +148,6 @@
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 1.5rem;
-  word-break: keep-all;
   white-space: pre-line;
 }
 
@@ -179,7 +178,6 @@
   padding-left: 1rem;
   position: relative;
   color: var(--text-primary);
-  word-break: keep-all;
 }
 
 .highlight::before {

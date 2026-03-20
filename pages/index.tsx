@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 import { Project } from "@/data/projects";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -14,7 +15,17 @@ const Home = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <main className={styles["main"]}>
+    <>
+      <Head>
+        <title>권민석 | Frontend Engineer</title>
+        <meta name="description" content="React, Next.js, TypeScript 기반 프론트엔드 엔지니어 권민석의 포트폴리오입니다. 최적화와 디테일을 코드로 증명합니다." />
+        <meta property="og:title" content="권민석 | Frontend Engineer" />
+        <meta property="og:description" content="React, Next.js, TypeScript 기반 프론트엔드 엔지니어 권민석의 포트폴리오" />
+        <meta property="og:type" content="website" />
+        {/* <meta property="og:url" content="https://your-domain.com" /> */}
+        {/* <meta property="og:image" content="https://your-domain.com/og-image.png" /> */}
+      </Head>
+      <main className={styles["main"]}>
       <Header />
       <Hero />
       <Profile />
@@ -31,6 +42,7 @@ const Home = () => {
         onClose={() => setSelectedProject(null)}
       />
     </main>
+    </>
   );
 };
 

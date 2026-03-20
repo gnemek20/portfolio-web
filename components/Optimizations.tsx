@@ -8,7 +8,7 @@ const techniques = [
   { name: "CSS Modules Tree Shaking", desc: "미사용 스타일 자동 제거 → CSS 3.4KB" },
   { name: "Minimal JS Bundle", desc: "First Load JS 89.3KB (gzip)" },
   { name: "Font Preload", desc: "Pretendard Variable preload → FCP 0.3s" },
-  { name: "Zero Layout Shift", desc: "scrollbar-gutter: stable → CLS 0" },
+  { name: "Zero Layout Shift", desc: "scrollbar: padding → CLS 0" },
   { name: "Code Splitting", desc: "페이지 단위 코드 스플리팅 → 11.3KB/page" },
 ];
 

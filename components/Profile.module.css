@@ -26,7 +26,6 @@
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: 2rem;
-  word-break: keep-all;
 }
 
 .info-grid {
@@ -53,7 +52,6 @@
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text-primary);
-  word-break: keep-all;
 }
 
 .awards {
@@ -82,7 +80,6 @@
 .award-title {
   color: var(--text-primary);
   font-weight: 500;
-  word-break: keep-all;
 }
 
 .award-badge {

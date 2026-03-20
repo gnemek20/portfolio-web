@@ -28,7 +28,6 @@
   margin-bottom: 2.5rem;
   letter-spacing: -0.02em;
   text-align: center;
-  word-break: keep-all;
 }
 
 .timeline {
@@ -134,7 +133,6 @@
   color: var(--text-secondary);
   margin-top: 0.25rem;
   line-height: 1.5;
-  word-break: keep-all;
 }
 
 @media (max-width: 640px) {
