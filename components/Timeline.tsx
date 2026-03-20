@@ -27,12 +27,6 @@ const events = [
     desc: "MapleStory 코어 강화 시뮬레이터 실서비스 운영 + Google AdSense 수익화",
     tag: "개인",
   },
-  {
-    period: "2025. 10 — 2026. 01",
-    title: "Hyunwoo AI",
-    desc: "3D 지식 온톨로지 시각화 플랫폼 외주",
-    tag: "외주",
-  },
 ];
 
 const tagColor: Record<string, string> = {

@@ -75,8 +75,7 @@ export const projects: Project[] = [
     id: "hyunwoo-ai",
     title: "Hyunwoo AI",
     subtitle: "3D 지식 온톨로지 시각화 플랫폼",
-    category: "외주",
-    period: "2025. 10 — 2026. 01",
+    category: "팀",
     description: [
       "Three.js의 3D 객체 탐색을 통해 사용자의 생각을 우주 공간에서 살펴볼 수 있는 사이트입니다. 관리자는 어드민 페이지에서 데이터를 관리하거나, knowledge-ontology-engine 레포지토리에 main push로 데이터를 관리할 수 있습니다.",
       "",
@@ -148,6 +147,7 @@ const updateMeshScale = (mesh, camera) => {
       },
     ],
     links: {
+      github: "https://github.com/gnemek20/hyunwoo-ai-front",
       live: "https://www.hyunwoo.ai/",
     },
   },
