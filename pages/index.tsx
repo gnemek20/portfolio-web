@@ -4,9 +4,10 @@ import { Project } from "@/data/projects";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Profile from "@/components/Profile";
+import Timeline from "@/components/Timeline";
+import Awards from "@/components/Awards";
 import Projects from "@/components/Projects";
 import ProjectDialog from "@/components/ProjectDialog";
-import Timeline from "@/components/Timeline";
 import Optimizations from "@/components/Optimizations";
 import Contact from "@/components/Contact";
 import styles from "@/styles/index.module.css";
@@ -30,12 +31,13 @@ const Home = () => {
       <Hero />
       <Profile />
       <div className={styles["warm-bg"]}>
+        <Timeline />
+      </div>
+      <Awards />
+      <div className={styles["warm-bg"]}>
         <Projects onSelect={setSelectedProject} />
       </div>
-      <Timeline />
-      <div className={styles["warm-bg"]}>
-        <Optimizations />
-      </div>
+      <Optimizations />
       <Contact />
       <ProjectDialog
         project={selectedProject}

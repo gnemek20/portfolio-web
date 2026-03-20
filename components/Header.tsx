@@ -4,8 +4,9 @@ import styles from "./Header.module.css";
 
 const sections = [
   { id: "profile", label: "Profile" },
-  { id: "projects", label: "Projects" },
   { id: "timeline", label: "Timeline" },
+  { id: "awards", label: "Awards" },
+  { id: "projects", label: "Projects" },
   { id: "optimizations", label: "Optimization" },
 ];
 

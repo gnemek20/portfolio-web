@@ -47,20 +47,6 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className={styles["awards"]}>
-        <p className={styles["section-label"]}>Awards</p>
-        <div className={styles["award"]}>
-          <span className={styles["award-year"]}>2023</span>
-          <span className={styles["award-title"]}>Seoul Web 3.0 Festival</span>
-          <span className={styles["award-badge"]}>대상</span>
-        </div>
-        <div className={styles["award"]}>
-          <span className={styles["award-year"]}>2021</span>
-          <span className={styles["award-title"]}>현대오토에버 화이트 해커 경진대회</span>
-          <span className={styles["award-badge"]}>대상</span>
-        </div>
-      </div>
-
       <div className={styles["skills"]}>
         <p className={styles["section-label"]}>Skills</p>
 
