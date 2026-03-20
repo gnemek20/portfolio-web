@@ -247,7 +247,7 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "최초 로드 시 상단 카탈로그 패널을 닫으면 3D 공간을 탐색할 수 있습니다. 사람 → 뇌 → 노드 → 하위 노드 순으로 점진적으로 깊이 들어가며, 각 단계 전환 시 opacity 보간으로 부드럽게 페이드됩니다.",
+            value: "최초 로드 시 상단 카탈로그 패널을 닫으면 3D 공간을 탐색할 수 있습니다. 사람 → 뇌 → 노드 → 하위 노드 순으로 점진적으로 깊이 들어가며, 각 단계 전환 시 opacity 보간으로 부드럽게 페이드됩니다. 뇌 단계에서는 카메라 방향에 따라 좌뇌와 우뇌가 각각 다른 카테고리의 데이터를 표시합니다.",
           },
           {
             type: "image",
@@ -263,7 +263,7 @@ export const projects: Project[] = [
             type: "image",
             value: "/references/hyunwoo-ai/Hyunwoo AI 화면 구조2.webp",
             alt: "Hyunwoo AI 노드 탐색 UI",
-            caption: "노드 클릭 → 좌측 네비게이터 + 우측 하단 미니맵으로 현재 위치 확인",
+            caption: "좌뇌의 노드가 페이드 인되며 로드되는 장면 — 좌측 네비게이터와 우측 하단 미니맵 UI",
           },
           {
             type: "image",
@@ -273,7 +273,7 @@ export const projects: Project[] = [
           },
           {
             type: "text",
-            value: "같은 태그를 가진 노드들은 흰색 선으로 연결되며, 상단 카탈로그 패널에서 태그 필터를 통해 관련 노드들의 마크다운 설명을 확인할 수 있습니다. 자식이 있는 노드는 울퉁불퉁한 모양(TetrahedronGeometry), 끝 노드는 매끔한 원(SphereGeometry)으로 구분됩니다.",
+            value: "하위 노드는 부모 노드와 흰색 connect line으로 연결되어 계층 구조를 시각적으로 표현합니다. 상단 카탈로그 패널에서는 태그 필터를 통해 관련 노드들의 마크다운 설명을 확인할 수 있습니다. 자식이 있는 노드는 울퉁불퉁한 모양(TetrahedronGeometry), 끝 노드는 매끄러운 원(SphereGeometry)으로 구분됩니다.",
           },
           {
             type: "image",
@@ -289,7 +289,7 @@ export const projects: Project[] = [
           },
           {
             type: "text",
-            value: "어드민 페이지에서는 로그인 후 JWT 토큰을 발급받아 온톨로지를 트리 형태로 관리할 수 있습니다. 노드의 추가·수정·제거 변경 사항은 Status 패널에서 색상별로 확인할 수 있으며, Ctrl+S 또는 Save 버튼으로 Fly.io에 배포된 PostgreSQL 데이터베이스에 였속화합니다.",
+            value: "어드민 페이지에서는 로그인 후 JWT 토큰을 발급받아 온톨로지를 트리 형태로 관리할 수 있습니다. 노드의 추가·수정·제거 변경 사항은 Status 패널에서 색상별로 확인할 수 있으며, Ctrl+S 또는 Save 버튼으로 Fly.io에 배포된 PostgreSQL 데이터베이스에 영속화합니다.",
           },
           {
             type: "image",
@@ -316,7 +316,7 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "3D 공간의 카메라는 구면 좌표계(theta, phi) 기반의 커스텀 컨트롤러로 제어됩니다. 마우스 드래그로 회전하고, 휠 줄은 로그 스케일(Math.exp) 기반 프랙탈 줄을 적용하여 어떤 배율에서도 일정한 속도감을 유지합니다. 모든 변화는 매 프레임 lerp 보간으로 부드럽게 전환됩니다.",
+            value: "3D 공간의 카메라는 구면 좌표계(theta, phi) 기반의 커스텀 컨트롤러로 제어됩니다. 마우스 드래그로 회전하고, 휠 줌은 로그 스케일(Math.exp) 기반 프랙탈 줌을 적용하여 어떤 배율에서도 일정한 속도감을 유지합니다. 모든 변화는 매 프레임 lerp 보간으로 부드럽게 전환됩니다.",
           },
           {
             type: "text",
@@ -324,11 +324,15 @@ export const projects: Project[] = [
           },
           {
             type: "text",
-            value: "노드 배치는 Poisson 유사 구면 분포 알고리즘을 사용합니다. 구면 좌표로 랜덤 위치를 생성한 뒤 Math.cbrt로 균일 분포를 보정하고, 최소 간격 조건을 만족할 때까지 최대 50회 재시도(rejection sampling)하여 겨침 없이 배치합니다.",
+            value: "뇌 모델의 각 정점(vertex) 위치를 모델 중심점(center) 기준으로 계산하여 좌뇌와 우뇌에 서로 다른 vertex color를 할당합니다. 카메라의 theta 각도로 현재 바라보는 반구를 판별하고, 좌뇌와 우뇌가 각각 다른 카테고리의 데이터를 로드하여 표시합니다.",
           },
           {
             type: "text",
-            value: "Ontology 데이터는 부모-자식 관계의 깊이를 예측할 수 없는 재귀적 구조입니다. Fly.io에 배포된 PostgreSQL에 온톨로지 포맷으로 저장된 플랫한 레코드를 재귀적으로 탐색하여 Tree 구조로 변환하고, Tree의 노드 조작을 다시 Ontology 포맷으로 역변환하는 양방향 변환 로직을 구현했습니다. 어드민에서 변경 사항을 저장하면 기존 온톨로지와의 diff를 산출하여 inserted·deleted·updated 단위로 데이터베이스에 였속화합니다.",
+            value: "노드 배치는 Poisson 유사 구면 분포 알고리즘을 사용합니다. 구면 좌표로 랜덤 위치를 생성한 뒤 Math.cbrt로 균일 분포를 보정하고, 최소 간격 조건을 만족할 때까지 최대 50회 재시도(rejection sampling)하여 겹침 없이 배치합니다.",
+          },
+          {
+            type: "text",
+            value: "Ontology 데이터는 부모-자식 관계의 깊이를 예측할 수 없는 재귀적 구조입니다. Fly.io에 배포된 PostgreSQL에 온톨로지 포맷으로 저장된 플랫한 레코드를 재귀적으로 탐색하여 Tree 구조로 변환하고, Tree의 노드 조작을 다시 Ontology 포맷으로 역변환하는 양방향 변환 로직을 구현했습니다. 어드민에서 변경 사항을 저장하면 기존 온톨로지와의 diff를 산출하여 inserted·deleted·updated 단위로 데이터베이스에 영속화합니다.",
           },
           {
             type: "code",
@@ -357,7 +361,7 @@ export const projects: Project[] = [
           },
           {
             type: "text",
-            value: "3D 페이지에서는 데이터베이스의 전체 노드를 초기에 가져오되, 모든 섹션을 한 번에 생성하지 않습니다. 사용자가 노드 내부에 접근할 때 해당 깊이의 섹션을 동적으로 생성(lazy section creation)하여, 예측할 수 없는 깊이의 재귀적 데이터에 대응하면서도 초기 로드 성능을 유지합니다. 줄 레벨이 일정 범위에 도달하면 다음 섹션을 생성하고 opacity 보간으로 전환합니다.",
+            value: "3D 페이지에서는 데이터베이스의 전체 노드를 초기에 가져오되, 모든 섹션을 한 번에 생성하지 않습니다. 사용자가 노드 내부에 접근할 때 해당 깊이의 섹션을 동적으로 생성(lazy section creation)하여, 예측할 수 없는 깊이의 재귀적 데이터에 대응하면서도 초기 로드 성능을 유지합니다. 줌 레벨이 일정 범위에 도달하면 다음 섹션을 생성하고 opacity 보간으로 전환합니다.",
           },
           {
             type: "text",
