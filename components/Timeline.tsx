@@ -27,12 +27,19 @@ const events = [
     desc: "MapleStory 코어 강화 시뮬레이터 실서비스 운영 + Google AdSense 수익화",
     tag: "개인",
   },
+  {
+    period: "2025. 10 — 현재",
+    title: "Dictector 개발",
+    desc: "스텔스 모드로 창업 준비 중",
+    tag: "창업",
+  },
 ];
 
 const tagColor: Record<string, string> = {
   "계약직": "tag-work",
   "외주": "tag-outsource",
   "개인": "tag-personal",
+  "창업": "tag-startup",
 };
 
 const Timeline = () => {

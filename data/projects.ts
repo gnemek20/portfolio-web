@@ -147,7 +147,6 @@ const updateMeshScale = (mesh, camera) => {
       },
     ],
     links: {
-      github: "https://github.com/gnemek20/hyunwoo-ai-front",
       live: "https://www.hyunwoo.ai/",
     },
   },

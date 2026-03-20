@@ -122,6 +122,11 @@
   background: var(--bg-warm);
 }
 
+.tag-startup {
+  color: #7C55C8;
+  background: rgba(124, 85, 200, 0.08);
+}
+
 .card-title {
   font-size: 0.9375rem;
   font-weight: 600;
