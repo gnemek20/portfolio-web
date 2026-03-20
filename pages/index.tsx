@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Profile from "@/components/Profile";
 import Projects from "@/components/Projects";
 import ProjectDialog from "@/components/ProjectDialog";
+import Timeline from "@/components/Timeline";
 import Optimizations from "@/components/Optimizations";
 import Contact from "@/components/Contact";
 import styles from "@/styles/index.module.css";
@@ -20,6 +21,7 @@ const Home = () => {
       <div className={styles["warm-bg"]}>
         <Projects onSelect={setSelectedProject} />
       </div>
+      <Timeline />
       <Optimizations />
       <Contact />
       <ProjectDialog

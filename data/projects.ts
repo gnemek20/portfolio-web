@@ -146,7 +146,6 @@ const updateMeshScale = (mesh, camera) => {
       },
     ],
     links: {
-      github: "https://github.com/hyunwoo-ai/Hyunwoo_AI_Front",
       live: "https://www.hyunwoo.ai/",
     },
   },
@@ -206,7 +205,6 @@ const WelcomeAnimation = dynamic(
       },
     ],
     links: {
-      github: "https://github.com/gnemek20/DaeyangING",
       live: "https://www.daeyanging.com/",
     },
   },

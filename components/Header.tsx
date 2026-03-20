@@ -5,6 +5,7 @@ import styles from "./Header.module.css";
 const sections = [
   { id: "profile", label: "Profile" },
   { id: "projects", label: "Projects" },
+  { id: "timeline", label: "Timeline" },
   { id: "optimizations", label: "Optimization" },
 ];
 

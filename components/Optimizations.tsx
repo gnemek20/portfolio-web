@@ -1,36 +1,29 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 import useInView from "@/hooks/useInView";
 import styles from "./Optimizations.module.css";
 
 const techniques = [
-  { name: "Static Site Generation", desc: "모든 페이지를 빌드 타임에 프리렌더링 → TTFB 120ms 이하" },
-  { name: "CSS Modules Tree Shaking", desc: "사용하지 않는 스타일 자동 제거 → CSS 3.4KB" },
-  { name: "Minimal JS Bundle", desc: "First Load JS 89.3KB 달성 (gzip)" },
-  { name: "Font Preload", desc: "Pretendard Variable CDN preconnect → FCP 0.3s" },
-  { name: "Zero Layout Shift", desc: "scrollbar-gutter: stable + 고정 레이아웃 → CLS 0" },
-  { name: "Code Splitting", desc: "Next.js 페이지 단위 자동 코드 스플리팅 → 11.3KB/page" },
+  { name: "Static Site Generation", desc: "빌드 타임 프리렌더링 → TTFB 120ms 이하" },
+  { name: "CSS Modules Tree Shaking", desc: "미사용 스타일 자동 제거 → CSS 3.4KB" },
+  { name: "Minimal JS Bundle", desc: "First Load JS 89.3KB (gzip)" },
+  { name: "Font Preload", desc: "Pretendard Variable preload → FCP 0.3s" },
+  { name: "Zero Layout Shift", desc: "scrollbar-gutter: stable → CLS 0" },
+  { name: "Code Splitting", desc: "페이지 단위 코드 스플리팅 → 11.3KB/page" },
 ];
 
 const Optimizations = () => {
   const [optimized, setOptimized] = useState(true);
+  const [fading, setFading] = useState(false);
   const { ref, inView } = useInView();
-  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
-    const el = contentRef.current;
-    if (el) {
-      el.style.maxHeight = el.scrollHeight + "px";
-    }
-    setOptimized((v) => !v);
+    setFading(true);
+    setTimeout(() => {
+      setOptimized((v) => !v);
+      setFading(false);
+    }, 250);
   };
-
-  useLayoutEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    void el.offsetHeight;
-    el.style.maxHeight = el.scrollHeight + "px";
-  }, [optimized]);
 
   return (
     <section
@@ -53,6 +46,7 @@ const Optimizations = () => {
       <button
         className={clsx(styles["toggle"], { [styles["toggle-off"]]: !optimized })}
         onClick={handleToggle}
+        disabled={fading}
       >
         <span className={styles["toggle-knob"]} />
         <span className={styles["toggle-label"]}>
@@ -60,11 +54,8 @@ const Optimizations = () => {
         </span>
       </button>
 
-      <div
-        ref={contentRef}
-        className={styles["content-area"]}
-      >
-          {optimized ? (
+      <div className={clsx(styles["content-area"], { [styles["content-fade-out"]]: fading })}>
+        {optimized ? (
           <div className={styles["techniques"]}>
             <p className={styles["techniques-label"]}>적용된 최적화 기법</p>
             {techniques.map((t) => (

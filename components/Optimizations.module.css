@@ -79,13 +79,18 @@
 }
 
 .content-area {
-  overflow: hidden;
-  transition: max-height 400ms ease;
+  min-height: 280px;
+  opacity: 1;
+  transition: opacity 250ms ease-in-out;
+}
+
+.content-fade-out {
+  opacity: 0;
 }
 
 .techniques {
   text-align: left;
-  animation: fade-in 300ms ease;
+  animation: fade-in 250ms ease-in-out;
 }
 
 .techniques-label {
@@ -132,7 +137,7 @@
 }
 
 .warning-area {
-  animation: fade-in 300ms ease;
+  animation: fade-in 250ms ease-in-out;
 }
 
 .warning-title {
