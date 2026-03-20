@@ -216,7 +216,7 @@ const WelcomeAnimation = dynamic(
     title: "WAAT",
     subtitle: "AI 데이터 전처리 자동화 도구",
     category: "외주",
-    period: "2023. 01 — 08",
+    period: "2022. 06 — 2023. 08",
     description: [
       "한양대학교 컴퓨테이셔널사회과학연구센터의 요청으로 제작된 데이터 전처리 자동화 도구입니다.",
       "",

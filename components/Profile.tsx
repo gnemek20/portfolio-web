@@ -15,7 +15,7 @@ const devops = [
   "Docker", "Vercel", "Fly.io", "GitHub Actions", "Git Flow",
 ];
 
-const languages = ["C", "Python", "TypeScript", "JavaScript"];
+const languages = ["Python", "TypeScript", "JavaScript"];
 
 const Profile = () => {
   const { ref, inView } = useInView();
