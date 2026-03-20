@@ -83,6 +83,8 @@ export const projects: Project[] = [
       "React Three Fiber 없이 Raw Three.js로 약 2,200줄 이상의 커스텀 씬 그래프 엔진을 직접 구축했으며, 4개의 커스텀 모델 로더(Brain, Human, Milkyway, Star)와 BufferGeometry 기반 동적 Vertex Coloring 시스템을 구현했습니다.",
       "",
       "이진 공간 분할(좌반구/우반구)에 따라 정점 색상을 차등 적용하는 방식으로, D3나 Cytoscape 없이 O(n) 복잡도의 자체 TreeLayout 알고리즘으로 계층적 노드 배치를 처리합니다.",
+      "",
+      "특히 Ontology 데이터는 부모-자식 관계의 깊이를 예측할 수 없는 재귀적 구조입니다. DB의 플랫한 Ontology 레코드를 재귀적으로 탐색하여 Tree 구조로 변환하고, Tree의 노드 조작을 다시 Ontology 포맷으로 역변환하는 양방향 변환 로직을 구현했습니다. 이를 통해 3D 시각화와 데이터 영속성을 동시에 달성했습니다.",
     ].join("\n"),
     tags: ["Next.js 14", "Three.js 0.180", "TypeScript", "FastAPI", "PostgreSQL"],
     highlights: [
@@ -90,6 +92,7 @@ export const projects: Project[] = [
       "4개 커스텀 모델 로더 — Brain·Human·Milkyway·Star",
       "BufferGeometry Vertex Coloring + 이진 공간 분할 (좌·우 반구 차등 색상)",
       "O(n) TreeLayout 알고리즘 (D3/Cytoscape 미사용, 레벨당 80px 간격)",
+      "Ontology ↔ Tree 양방향 재귀 변환 — 깊이 미예측 데이터 구조 실시간 변환",
       "Dual Renderer — WebGLRenderer + CSS3DRenderer 동시 운용",
       "프랙탈 줌 — 로그 보간(logarithmic interpolation) 카메라 네비게이션",
       "Git-as-Database — Markdown → GitHub Actions → DB 동기화 파이프라인",
@@ -213,7 +216,7 @@ const WelcomeAnimation = dynamic(
     title: "WAAT",
     subtitle: "AI 데이터 전처리 자동화 도구",
     category: "외주",
-    period: "2023. 01 — 04",
+    period: "2023. 01 — 08",
     description: [
       "한양대학교 컴퓨테이셔널사회과학연구센터의 요청으로 제작된 데이터 전처리 자동화 도구입니다.",
       "",

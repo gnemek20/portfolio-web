@@ -8,7 +8,7 @@ const frontend = [
 ];
 
 const backend = [
-  "FastAPI", "Express", "PostgreSQL", "Supabase", "Redis", "Celery",
+  "FastAPI", "Express", "PostgreSQL", "Supabase",
 ];
 
 const devops = [

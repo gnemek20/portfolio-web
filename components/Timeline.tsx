@@ -10,16 +10,10 @@ const events = [
     tag: "계약직",
   },
   {
-    period: "2023. 01 — 04",
+    period: "2023. 01 — 08",
     title: "WAAT",
     desc: "한양대학교 컴퓨테이셔널사회과학연구센터 AI 데이터 전처리 도구 외주",
     tag: "외주",
-  },
-  {
-    period: "2023. 08",
-    title: "서울 웹 3.0 페스티벌 대상",
-    desc: "",
-    tag: "수상",
   },
   {
     period: "2024. 06 — 2025. 01",
@@ -44,7 +38,6 @@ const events = [
 const tagColor: Record<string, string> = {
   "계약직": "tag-work",
   "외주": "tag-outsource",
-  "수상": "tag-award",
   "개인": "tag-personal",
 };
 
