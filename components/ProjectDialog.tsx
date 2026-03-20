@@ -129,7 +129,10 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
                 <div key={i} className={styles["accordion-stats"]}>
                   <p className={styles["accordion-stats-title"]}>{block.value}</p>
                   {block.caption?.split("\n").map((line, j) => (
-                    <p key={j} className={styles["accordion-stat-line"]}>
+                    <p
+                      key={j}
+                      className={line.startsWith("→") ? styles["accordion-stat-sub"] : styles["accordion-stat-line"]}
+                    >
                       {highlightKeywords(line)}
                     </p>
                   ))}
