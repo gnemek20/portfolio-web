@@ -60,6 +60,10 @@ interface Props {
 
 const PEEK_HEIGHT = 60;
 
+const FADE_MS = 500;
+const HOLD_MS = 1000;
+const GAP_MS = 1000;
+
 const GifPlayer = ({
   block,
   expanded,
@@ -67,49 +71,91 @@ const GifPlayer = ({
   block: ContentBlock;
   expanded: boolean;
 }) => {
-  const [cycle, setCycle] = useState(0);
-  const [show, setShow] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!expanded) {
-      clearTimeout(timerRef.current);
-      setCycle(0);
-      setShow(false);
+    const v = videoRef.current;
+    if (!expanded || !v) {
+      if (v) {
+        v.pause();
+        v.currentTime = 0;
+      }
+      setVisible(false);
+      if (progressRef.current) progressRef.current.style.width = "0%";
       return;
     }
 
-    const start = () => {
-      setCycle((c) => c + 1);
-      setShow(true);
+    let cancelled = false;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    let raf = 0;
 
-      timerRef.current = setTimeout(() => {
-        setShow(false);
-        timerRef.current = setTimeout(() => {
-          start();
-        }, 500);
-      }, (block.duration || 17000) + 1000);
+    const later = (fn: () => void, ms: number) => {
+      timers.push(setTimeout(() => { if (!cancelled) fn(); }, ms));
     };
 
-    start();
-    return () => clearTimeout(timerRef.current);
-  }, [expanded, block.duration]);
+    const tick = () => {
+      if (cancelled) return;
+      if (v.duration && progressRef.current) {
+        progressRef.current.style.width = `${(v.currentTime / v.duration) * 100}%`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    const startCycle = () => {
+      v.currentTime = 0;
+      if (progressRef.current) progressRef.current.style.width = "0%";
+      setVisible(true);
+      v.play().catch(() => {});
+      raf = requestAnimationFrame(tick);
+    };
+
+    const onEnded = () => {
+      if (cancelled) return;
+      cancelAnimationFrame(raf);
+      if (progressRef.current) progressRef.current.style.width = "100%";
+      later(() => {
+        setVisible(false);
+        later(() => {
+          later(startCycle, GAP_MS);
+        }, FADE_MS);
+      }, HOLD_MS);
+    };
+
+    v.addEventListener("ended", onEnded);
+    startCycle();
+
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+      cancelAnimationFrame(raf);
+      v.removeEventListener("ended", onEnded);
+      v.pause();
+      v.currentTime = 0;
+      setVisible(false);
+      if (progressRef.current) progressRef.current.style.width = "0%";
+    };
+  }, [expanded]);
 
   return (
     <figure className={styles["accordion-figure"]}>
       <div
         className={clsx(styles["gif-wrapper"], {
-          [styles["gif-show"]]: show,
+          [styles["gif-show"]]: visible,
         })}
       >
-        {cycle > 0 && (
-          <img
-            key={cycle}
-            src={block.value}
-            alt={block.alt ?? ""}
-            className={styles["accordion-img"]}
-          />
-        )}
+        <video
+          ref={videoRef}
+          src={block.value}
+          muted
+          playsInline
+          preload="auto"
+          className={styles["accordion-img"]}
+        />
+        <div className={styles["gif-timeline"]}>
+          <div ref={progressRef} className={styles["gif-timeline-fill"]} />
+        </div>
       </div>
       {block.caption && (
         <figcaption className={styles["accordion-caption"]}>

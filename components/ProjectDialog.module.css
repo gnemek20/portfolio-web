@@ -414,6 +414,22 @@
   opacity: 1;
 }
 
+.gif-timeline {
+  width: 100%;
+  height: 3px;
+  background: color-mix(in srgb, var(--border) 50%, transparent);
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.gif-timeline-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
 .accordion-caption {
   font-size: 0.75rem;
   color: var(--text-tertiary);

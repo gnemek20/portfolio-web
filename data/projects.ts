@@ -3,7 +3,6 @@ export interface ContentBlock {
   value: string;
   alt?: string;
   caption?: string;
-  duration?: number;
 }
 
 export interface AccordionTab {
@@ -281,10 +280,9 @@ export const projects: Project[] = [
           },
           {
             type: "gif",
-            value: "/references/daeyang-ing/대양ING 애니메이션.gif",
+            value: "/references/daeyang-ing/대양ING 애니메이션.mp4",
             alt: "DaeyangING 시네마틱 인트로 애니메이션",
             caption: "순수 CSS @keyframes + animation-play-state로 구현한 ~10초 인트로 시퀀스",
-            duration: 17000,
           },
           {
             type: "text",
