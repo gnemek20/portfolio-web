@@ -273,7 +273,7 @@ export const projects: Project[] = [
           },
           {
             type: "text",
-            value: "하위 노드는 부모 노드와 흰색 connect line으로 연결되어 계층 구조를 시각적으로 표현합니다. 상단 카탈로그 패널에서는 태그 필터를 통해 관련 노드들의 마크다운 설명을 확인할 수 있습니다. 자식이 있는 노드는 울퉁불퉁한 모양(TetrahedronGeometry), 끝 노드는 매끄러운 원(SphereGeometry)으로 구분됩니다.",
+            value: "한 섹션 내에서 같은 태그를 가진 노드들은 흰색 connect line으로 서로 연결되어 관련성을 시각적으로 표현합니다. 상단 카탈로그 패널에서는 태그 필터를 통해 관련 노드들의 마크다운 설명을 확인할 수 있습니다. 자식이 있는 노드는 울퉁불퉁한 모양(TetrahedronGeometry), 끝 노드는 매끄러운 원(SphereGeometry)으로 구분됩니다.",
           },
           {
             type: "image",
