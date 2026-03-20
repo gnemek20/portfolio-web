@@ -1,15 +1,9 @@
-export interface Optimization {
-  label: string;
-  technique: string;
-  before: string;
-  after: string;
-}
-
 export interface ContentBlock {
-  type: "text" | "image" | "stats";
+  type: "text" | "image" | "stats" | "gif";
   value: string;
   alt?: string;
   caption?: string;
+  duration?: number;
 }
 
 export interface AccordionTab {
@@ -27,7 +21,6 @@ export interface Project {
   tags: string[];
   highlights: string[];
   architecture?: string;
-  optimizations?: Optimization[];
   accordions?: AccordionTab[];
   links: { github?: string; live?: string };
 }
@@ -249,54 +242,6 @@ export const projects: Project[] = [
     ],
     architecture:
       "front/ → Next.js 14 (Pages Router) + Raw Three.js + TreeContext\nback/ → FastAPI + asyncpg (PostgreSQL)\nknowledge-ontology-engine/ → Markdown 지식 그래프 (GitHub Actions CI/CD)",
-    optimizations: [
-      {
-        label: "매 프레임 Vector3 할당 제거",
-        technique: "Module-scope 객체 재사용",
-        before: `const updateMeshScale = (mesh, camera) => {
-  const s = new THREE.Vector3();
-  mesh.getWorldPosition(s);
-  const dist = camera.position.distanceTo(s);
-  mesh.scale.setScalar(dist * 0.01);
-}`,
-        after: `const _scaleVec = new THREE.Vector3();
-
-const updateMeshScale = (mesh, camera) => {
-  mesh.getWorldPosition(_scaleVec);
-  const dist = camera.position.distanceTo(_scaleVec);
-  mesh.scale.setScalar(dist * 0.01);
-}`,
-      },
-      {
-        label: "Three.js 리소스 메모리 누수 방지",
-        technique: "useEffect cleanup에서 전수 dispose",
-        before: `useEffect(() => {
-  const scene = new THREE.Scene();
-  const renderer = new THREE.WebGLRenderer();
-  // ... 씬 구성
-
-  return () => {
-    // 정리 코드 없음 → GPU 메모리 누수
-  };
-}, []);`,
-        after: `useEffect(() => {
-  const scene = new THREE.Scene();
-  const renderer = new THREE.WebGLRenderer();
-  // ... 씬 구성
-
-  return () => {
-    scene.traverse((obj) => {
-      obj.geometry?.dispose();
-      if (Array.isArray(obj.material))
-        obj.material.forEach(m => { m.map?.dispose(); m.dispose(); });
-      else if (obj.material)
-        { obj.material.map?.dispose(); obj.material.dispose(); }
-    });
-    renderer.dispose();
-  };
-}, []);`,
-      },
-    ],
     links: {
       live: "https://www.hyunwoo.ai/",
     },
@@ -326,35 +271,55 @@ const updateMeshScale = (mesh, camera) => {
     ],
     architecture:
       "front/ → Next.js 15 (Pages Router) + CSS-only Animations\nback/ → Express + Nodemailer (Vercel Serverless)",
-    optimizations: [
+    accordions: [
       {
-        label: "무거운 애니메이션 컴포넌트 코드 스플리팅",
-        technique: "Dynamic Import (ssr: false)",
-        before: `import { WelcomeAnimation } from "@/components";
-
-// 초기 번들에 전체 애니메이션 코드 포함
-// JS 파싱 시간 증가 → LCP 지연`,
-        after: `import dynamic from "next/dynamic";
-
-const WelcomeAnimation = dynamic(
-  () => import("@/components/welcomeAnimation"),
-  { ssr: false }
-);
-// 클라이언트에서만 지연 로딩 → 초기 번들 축소`,
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "일반적인 회사 소개 페이지처럼 대양 ING의 사업 분야, 제품군, 오시는 길 등을 탐색할 수 있습니다. 접속 시 약 10초 분량의 시네마틱 인트로 애니메이션이 재생되며, 스크롤에 따라 각 섹션이 순차적으로 등장합니다.",
+          },
+          {
+            type: "gif",
+            value: "/references/daeyang-ing/대양ING 애니메이션.gif",
+            alt: "DaeyangING 시네마틱 인트로 애니메이션",
+            caption: "순수 CSS @keyframes + animation-play-state로 구현한 ~10초 인트로 시퀀스",
+            duration: 17000,
+          },
+          {
+            type: "text",
+            value: "상담 문의 페이지에서는 성함, 연락처, 제품 종류(지퍼·풀러), 제목, 요청 사항, 첨부파일을 작성하여 제출할 수 있습니다. 제출된 내용은 Nodemailer를 통해 회사 계정으로 이메일이 발송됩니다.",
+          },
+          {
+            type: "image",
+            value: "/references/daeyang-ing/대양ING 요청 양식.webp",
+            alt: "DaeyangING 상담 문의 양식",
+            caption: "성함·연락처·제품 종류·제목·요청 사항·첨부파일을 입력하는 상담 문의 폼",
+          },
+          {
+            type: "image",
+            value: "/references/daeyang-ing/대양ING 요청 수신.webp",
+            alt: "DaeyangING 요청 수신 메일",
+            caption: "문의 양식 제출 시 회사 계정으로 수신되는 이메일 — HTML 본문 + 첨부파일 포함",
+          },
+        ],
       },
       {
-        label: "Stale closure 버그 방지 + 의존성 최소화",
-        technique: "Functional setState 패턴",
-        before: `const changeFiles = (e) => {
-  const fileList = [...e.target.files];
-  setFiles([...files, ...fileList]);
-  // files가 stale closure일 수 있음
-};`,
-        after: `const changeFiles = useCallback((e) => {
-  const fileList = [...e.target.files];
-  setFiles(prev => [...prev, ...fileList]);
-  // 항상 최신 state 참조, 의존성 [] 최소화
-}, []);`,
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "인트로 애니메이션은 외부 라이브러리 없이 순수 CSS만으로 구현했습니다. 10개의 명명된 @keyframes를 정의하고, 모든 애니메이션에 animation-play-state: paused를 기본 적용합니다. JavaScript의 animationCounter(0~11) 상태 머신이 setTimeout 체인으로 단계를 전환하며, 해당 단계에 도달한 요소에만 playAnimation 클래스를 부여하여 animation-play-state: running으로 전환합니다.",
+          },
+          {
+            type: "text",
+            value: "IntersectionObserver 커스텀 훅(observeElement)은 once 모드와 가변 threshold를 지원합니다. 대상 요소가 뷰포트에 진입하면 observed 상태를 true로 전환하고 unobserve하여, 스크롤 인터랙션에 따른 등장 애니메이션을 한 번만 실행합니다. 각 페이지에서 이 훅을 사용해 hr, 이미지, 텍스트 블록의 reveal 타이밍을 제어합니다.",
+          },
+          {
+            type: "text",
+            value: "상담 문의는 Express 서버에서 Nodemailer로 처리합니다. 클라이언트가 첨부파일을 FileReader로 Base64 변환한 뒤 JSON으로 POST하면, 서버가 HTML 메일 본문(성함·종류·연락처·요청 사항)과 첨부파일 목록을 구성하여 Gmail SMTP(App Password)로 발송합니다. Naver Maps API로 실제 회사 위치를 지도에 표시하며, 마커와 주변 교통 안내를 함께 제공합니다.",
+          },
+        ],
       },
     ],
     links: {
@@ -445,6 +410,4 @@ const WelcomeAnimation = dynamic(
   },
 ];
 
-export const allOptimizations: Optimization[] = projects.flatMap(
-  (p) => p.optimizations ?? [],
-);
+

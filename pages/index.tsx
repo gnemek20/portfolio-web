@@ -8,7 +8,7 @@ import Timeline from "@/components/Timeline";
 import Awards from "@/components/Awards";
 import Projects from "@/components/Projects";
 import ProjectDialog from "@/components/ProjectDialog";
-import Optimizations from "@/components/Optimizations";
+
 import Contact from "@/components/Contact";
 import styles from "@/styles/index.module.css";
 
@@ -37,7 +37,7 @@ const Home = () => {
       <div className={styles["warm-bg"]}>
         <Projects onSelect={setSelectedProject} />
       </div>
-      <Optimizations />
+
       <Contact />
       <ProjectDialog
         project={selectedProject}

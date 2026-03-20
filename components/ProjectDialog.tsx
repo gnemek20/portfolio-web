@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import clsx from "clsx";
-import { Project, Optimization, AccordionTab } from "@/data/projects";
+import { Project, AccordionTab, ContentBlock } from "@/data/projects";
 import styles from "./ProjectDialog.module.css";
 
 const KEYWORDS = [
@@ -18,6 +18,8 @@ const KEYWORDS = [
   "matchTemplate", "TM_CCOEFF_NORMED", "YOLOv8n",
   "Fly.io", "CloudType", "NP-hard",
   "grayscale", "cold start",
+  "Nodemailer", "Base64", "observeElement",
+  "animationCounter", "playAnimation",
 ];
 
 const highlightKeywords = (text: string) => {
@@ -56,39 +58,67 @@ interface Props {
   onClose: () => void;
 }
 
-const OptToggle = ({ opt }: { opt: Optimization }) => {
-  const [view, setView] = useState<"before" | "after">("after");
+const PEEK_HEIGHT = 60;
+
+const GifPlayer = ({
+  block,
+  expanded,
+}: {
+  block: ContentBlock;
+  expanded: boolean;
+}) => {
+  const [cycle, setCycle] = useState(0);
+  const [show, setShow] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    if (!expanded) {
+      clearTimeout(timerRef.current);
+      setCycle(0);
+      setShow(false);
+      return;
+    }
+
+    const start = () => {
+      setCycle((c) => c + 1);
+      setShow(true);
+
+      timerRef.current = setTimeout(() => {
+        setShow(false);
+        timerRef.current = setTimeout(() => {
+          start();
+        }, 500);
+      }, (block.duration || 17000) + 1000);
+    };
+
+    start();
+    return () => clearTimeout(timerRef.current);
+  }, [expanded, block.duration]);
 
   return (
-    <div className={styles["opt-card"]}>
-      <div className={styles["opt-header"]}>
-        <span className={styles["opt-label"]}>{opt.label}</span>
-        <span className={styles["opt-technique"]}>{opt.technique}</span>
+    <figure className={styles["accordion-figure"]}>
+      <div
+        className={clsx(styles["gif-wrapper"], {
+          [styles["gif-show"]]: show,
+        })}
+      >
+        {cycle > 0 && (
+          <img
+            key={cycle}
+            src={block.value}
+            alt={block.alt ?? ""}
+            className={styles["accordion-img"]}
+          />
+        )}
       </div>
-      <div className={styles["opt-toggle-area"]}>
-        <div className={styles["opt-toggle-group"]}>
-          <button
-            className={clsx(styles["opt-toggle-btn"], { [styles["opt-toggle-active"]]: view === "before" })}
-            onClick={() => setView("before")}
-          >
-            Before
-          </button>
-          <button
-            className={clsx(styles["opt-toggle-btn"], { [styles["opt-toggle-active"]]: view === "after" })}
-            onClick={() => setView("after")}
-          >
-            After
-          </button>
-        </div>
-      </div>
-      <pre className={styles["opt-code"]}>
-        {view === "before" ? opt.before : opt.after}
-      </pre>
-    </div>
+      {block.caption && (
+        <figcaption className={styles["accordion-caption"]}>
+          {block.caption}
+        </figcaption>
+      )}
+    </figure>
   );
 };
-
-const PEEK_HEIGHT = 60;
 
 const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
   const [expanded, setExpanded] = useState(false);
@@ -143,6 +173,9 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
                   )}
                 </figure>
               );
+            }
+            if (block.type === "gif") {
+              return <GifPlayer key={i} block={block} expanded={expanded} />;
             }
             if (block.type === "stats") {
               return (
@@ -258,17 +291,6 @@ const ProjectDialog = ({ project, onClose }: Props) => {
             <>
               <p className={styles["dialog-section-label"]}>Architecture</p>
               <div className={styles["architecture"]}>{displayed.architecture}</div>
-            </>
-          )}
-
-          {displayed.optimizations && displayed.optimizations.length > 0 && (
-            <>
-              <p className={styles["dialog-section-label"]}>Optimizations</p>
-              <div className={styles["opt-list"]}>
-                {displayed.optimizations.map((opt, i) => (
-                  <OptToggle key={i} opt={opt} />
-                ))}
-              </div>
             </>
           )}
 
