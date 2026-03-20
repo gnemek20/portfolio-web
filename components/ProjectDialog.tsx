@@ -226,6 +226,18 @@ const AccordionPanel = ({ tab }: { tab: AccordionTab }) => {
             if (block.type === "gif") {
               return <GifPlayer key={i} block={block} expanded={expanded} />;
             }
+            if (block.type === "code") {
+              return (
+                <figure key={i} className={styles["accordion-figure"]}>
+                  <pre className={styles["accordion-code"]}><code>{block.value}</code></pre>
+                  {block.caption && (
+                    <figcaption className={styles["accordion-caption"]}>
+                      {block.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            }
             if (block.type === "stats") {
               return (
                 <div key={i} className={styles["accordion-stats"]}>

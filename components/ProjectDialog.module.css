@@ -437,6 +437,20 @@
   line-height: 1.5;
 }
 
+.accordion-code {
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  background: var(--bg-warm);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  white-space: pre;
+  margin: 0;
+}
+
 .accordion-stats {
   background: var(--bg-warm);
   border-radius: 5px;
