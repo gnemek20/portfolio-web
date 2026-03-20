@@ -173,6 +173,50 @@ export const projects: Project[] = [
       "TypeScript strict mode 적용",
       "Vercel 자동 배포 연동",
     ],
+    accordions: [
+      {
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "데스크톱 좌측의 아이콘을 클릭하면 커스텀 창이 열립니다. 각 창은 Windows처럼 모서리를 드래그하여 크기를 조절하거나, 상단 막대를 드래그하여 위치를 이동할 수 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/rnjs/권 화면 구조1.webp",
+            alt: "rnjs 메인 화면 구조",
+            caption: "Windows 스타일의 데스크톱 UI — 아이콘, 작업 표시줄, 커스텀 창",
+          },
+          {
+            type: "text",
+            value: "각 창은 고유의 z-index를 가지며, 하단 작업 표시줄에서 원하는 창을 클릭하거나 해당 창을 직접 포커스하면 최상단 레이어로 전환됩니다. Alt + W 단축키로 현재 포커스된 창을 닫을 수도 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/rnjs/권 화면 구조2.webp",
+            alt: "프로필 검색 기능",
+            caption: "프로필 창의 검색 기능 — 영문·한글·공백 모두 자동 변환",
+          },
+        ],
+      },
+      {
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "커스텀 창(Web 컴포넌트)은 8방향 리사이즈 핸들(상·하·좌·우·네 꼭짓점)을 구현합니다. mousedown 시점의 좌표 기준으로 mousemove delta를 계산하고, 방향에 따라 width·height·top·left를 동시에 갱신합니다. mouseup에는 { once: true } 옵션으로 리스너를 자동 해제하여 메모리 누수를 방지합니다.",
+          },
+          {
+            type: "text",
+            value: "검색 기능은 Inko 라이브러리를 활용해 한글 입력을 영문 키 배열로 자동 변환합니다. 공백을 제거한 뒤 ko2en 변환을 거치며, 쉼표(,)로 다중 검색어를 분리하여 각각 매칭합니다. 입력마다 200ms debounce를 적용해 불필요한 연산을 차단합니다.",
+          },
+          {
+            type: "text",
+            value: "키보드 단축키는 Compose Key 패턴으로 구현했습니다. Alt keydown 시점에 keydown 리스너를 해제하고 keyup 리스너를 등록한 뒤, W가 감지되면 현재 포커스된 창을 닫습니다. Alt keyup 시 다시 원래 리스너로 복원하는 상태 전환 방식입니다.",
+          },
+        ],
+      },
+    ],
     links: {
       github: "https://github.com/gnemek20/rnjs",
       live: "https://rnjs.vercel.app/",
