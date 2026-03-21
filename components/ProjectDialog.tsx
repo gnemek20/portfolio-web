@@ -26,6 +26,9 @@ const KEYWORDS = [
   "WER", "Web Speech Recognition API", "MyMemory API",
   "iFrame", "postMessage", "infoDelivery",
   "requestAnimationFrame",
+  "SessionStorage", "react-markdown",
+  "haire.yaml", "ngrok", "ZIP",
+  "LLM", "OpenAI", "iptables",
 ];
 
 const highlightKeywords = (text: string) => {

@@ -503,7 +503,7 @@ export const projects: Project[] = [
       "",
       "백엔드의 DooD(Docker-outside-of-Docker) 아키텍처와 pgvector 시맨틱 검색은 팀원이 구현했으며, 저는 이를 연동하는 클라이언트 측 인터페이스를 설계했습니다.",
     ].join("\n"),
-    tags: ["Next.js 14", "FastAPI", "Docker", "Supabase", "pgvector", "WebSocket"],
+    tags: ["Next.js 14", "FastAPI", "Supabase", "WebSocket"],
     highlights: [
       "WebSocket 5-이벤트 프로토콜 UI 구현 (output/input_request/result/error/done)",
       "SessionStorage JWT + Google OAuth 인증 플로우 구축",
@@ -514,6 +514,108 @@ export const projects: Project[] = [
     ],
     architecture:
       "front/ → Next.js 14 (Pages Router) + WebSocket + UserContext\nback/ → FastAPI + Docker SDK + Supabase (pgvector)",
+    accordions: [
+      {
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "AI 에이전트를 검색하고, 구독한 뒤, 채팅 형태로 실행하는 마켓플레이스입니다. 현재는 Dictector 개발로 인해 ngrok 서버를 종료한 상태이므로, 임시 목업 환경으로 운영 중입니다.",
+          },
+          {
+            type: "image",
+            value: "/references/haire/haire 화면 구조1.webp",
+            alt: "Haire 랜딩 페이지",
+            caption: "랜딩 페이지 — AI 에이전트 추천 및 탐색",
+          },
+          {
+            type: "image",
+            value: "/references/haire/에이전트 추천.webp",
+            alt: "에이전트 추천 결과",
+            caption: "검색어를 입력하면 시맨틱 검색으로 적합한 에이전트를 추천",
+          },
+          {
+            type: "image",
+            value: "/references/haire/haire 화면 구조2.webp",
+            alt: "에이전트 상세 페이지",
+            caption: "에이전트 상세 — 구독 및 사용하기 버튼을 통해 채팅 페이지로 이동",
+          },
+          {
+            type: "text",
+            value: "에이전트에 Verification이 필요한 경우, Google OAuth 등의 인증을 거친 뒤 쿼리를 보냅니다. 에이전트의 응답은 WebSocket 스트리밍으로 실시간 수신됩니다.",
+          },
+          {
+            type: "image",
+            value: "/references/haire/OAuth 인증 예시.webp",
+            alt: "OAuth 인증 예시",
+            caption: "에이전트가 요구하는 OAuth 인증 플로우",
+          },
+          {
+            type: "image",
+            value: "/references/haire/에이전트 채팅 예시.webp",
+            alt: "에이전트 채팅",
+            caption: "WebSocket 스트리밍으로 에이전트 응답을 실시간 수신하는 채팅 화면",
+          },
+          {
+            type: "text",
+            value: "개발자는 Share Agent 페이지에서 에이전트가 담긴 ZIP 파일을 업로드합니다. YAML Generator를 사용해 haire.yaml을 자동 생성하고, 수정한 뒤 ZIP에 포함하여 배포할 수 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/haire/에이전트 업로드 예시.webp",
+            alt: "에이전트 업로드",
+            caption: "ZIP 파일을 업로드하여 에이전트를 배포하는 Share Agent 페이지",
+          },
+          {
+            type: "image",
+            value: "/references/haire/haire yaml 생성.webp",
+            alt: "YAML 자동 생성",
+            caption: "업로드한 코드를 AI가 분석하여 haire.yaml 매니페스트를 자동 생성",
+          },
+          {
+            type: "image",
+            value: "/references/haire/haire yaml 수정.webp",
+            alt: "YAML 수정",
+            caption: "생성된 YAML을 직접 수정한 뒤 ZIP에 포함하여 최종 배포",
+          },
+          {
+            type: "image",
+            value: "/references/haire/haire 화면 구조3.webp",
+            alt: "대시보드",
+            caption: "에이전트 사용량 및 정산 내역을 확인하는 대시보드",
+          },
+        ],
+      },
+      {
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "이 프로젝트는 hAIre_Back(유저 인증 서버)과 back(에이전트 관리 서버) 두 개의 백엔드로 운영됩니다. hAIre_Back은 JWT 발급 · Google OAuth · 구독 관리를, back은 에이전트 CRUD · Docker 빌드 · WebSocket 실행 · 시맨틱 검색을 담당합니다.",
+          },
+          {
+            type: "text",
+            value: "에이전트 검색은 사용자의 쿼리를 LLM이 시맨틱 검색에 적합하도록 재작성한 뒤, OpenAI 임베딩으로 변환하여 Supabase pgvector에서 코사인 유사도 기반으로 상위 에이전트를 반환합니다. 프론트엔드에서는 이 결과를 카드 UI로 렌더링합니다.",
+          },
+          {
+            type: "text",
+            value: "채팅 화면은 WebSocket으로 5가지 이벤트 타입(output, input_request, result, error, done)을 처리합니다. output은 스트리밍 텍스트, input_request는 에이전트가 추가 입력을 요구할 때, result는 최종 결과, error와 done은 종료 처리에 사용됩니다. 에이전트 응답은 react-markdown + KaTeX + rehype-sanitize로 수식 지원과 XSS 방지를 동시에 처리하여 렌더링합니다.",
+          },
+          {
+            type: "text",
+            value: "개발자가 업로드한 ZIP 파일 또는 GitHub URL을 AI가 분석하여 haire.yaml 매니페스트를 자동 생성합니다. YAML에는 에이전트 이름, 설명, 입력 스키마, 인증 요구사항 등이 포함되며, 프론트엔드의 YAML Generator 페이지에서 직접 수정할 수 있습니다.",
+          },
+          {
+            type: "text",
+            value: "인증이 필요한 에이전트는 OAuth 플로우를 거칩니다. 프론트엔드에서 인증 제공자(Google, GitHub 등)의 인증 코드를 받고, 백엔드가 이를 액세스 토큰으로 교환하여 에이전트 실행 시 주입합니다. 인증 상태는 SessionStorage 기반 JWT로 관리됩니다.",
+          },
+          {
+            type: "text",
+            value: "추후 iptables로 에이전트의 API 실행을 제한하여 OAuth 코드 악용을 방지하고, 구독 방식에서 토큰 사용 방식으로 변경하여 매달 개발자에게 비용을 정산하는 기능을 추가할 예정입니다.",
+          },
+        ],
+      },
+    ],
     links: {
       live: "https://hairefront.vercel.app/",
     },
