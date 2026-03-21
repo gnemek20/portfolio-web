@@ -23,6 +23,9 @@ const KEYWORDS = [
   "PostgreSQL", "GitHub Actions", "TreeContext",
   "TetrahedronGeometry", "SphereGeometry",
   "CSS3DRenderer", "WebGLRenderer", "lerp",
+  "WER", "Web Speech Recognition API", "MyMemory API",
+  "iFrame", "postMessage", "infoDelivery",
+  "requestAnimationFrame",
 ];
 
 const highlightKeywords = (text: string) => {

@@ -515,7 +515,6 @@ export const projects: Project[] = [
     architecture:
       "front/ → Next.js 14 (Pages Router) + WebSocket + UserContext\nback/ → FastAPI + Docker SDK + Supabase (pgvector)",
     links: {
-      github: "https://github.com/SurhommeAI/haire-frontend",
       live: "https://hairefront.vercel.app/",
     },
   },
@@ -529,22 +528,129 @@ export const projects: Project[] = [
       "",
       "learning.tsx 단일 파일 500줄 이상 규모의 학습 엔진이 4가지 학습 모드(Shadowing, Dictation, Dictation+, Direct Translation)를 구현합니다. 토큰 단위 실시간 정답 추적, 문자 정규화를 통한 입력 검증, CEFR 레벨 및 품사 태깅 결과 요약 등 고도화된 학습 플로우를 제공합니다.",
       "",
-      "백엔드는 클린 레이어드 아키텍처(endpoints → services → repository → models)로 구성하고, Celery + Redis로 yt-dlp + ffmpeg + Soniox API 트랜스크립션 파이프라인을 비동기 처리합니다. Supabase Realtime 채널로 트랜스크립션 진행률을 실시간 폴링합니다.",
+      "Soniox API로 전사된 결과를 Supabase에 캐시하고, 이미 전사된 구간은 제외하여 필요한 범위만 전사 요청하는 비용 절감 로직을 적용했습니다. Supabase Realtime 채널로 전사 진행률을 실시간 폴링합니다.",
     ].join("\n"),
-    tags: ["Next.js 14", "FastAPI", "Supabase", "Celery", "Redis", "yt-dlp"],
+    tags: ["Next.js 14", "FastAPI", "Supabase", "Soniox API"],
     highlights: [
       "4가지 학습 모드 — Shadowing / Dictation / Dictation+ / Direct Translation",
       "토큰 단위 실시간 정답 추적 + 문자 정규화 입력 검증",
       "CEFR 레벨 + 품사(POS) 태깅 학습 결과 요약",
-      "클린 레이어드 아키텍처 — endpoints → services → repository → models",
-      "Celery + Redis 비동기 트랜스크립션 파이프라인",
-      "yt-dlp + ffmpeg + Soniox API 음성 인식 체인",
+      "전사 비용 절감 — 캐시 구간 제외 후 미전사 범위만 요청",
       "Supabase Realtime 채널 진행률 실시간 폴링",
+      "WER(Word Error Rate) DP 알고리즘 기반 채점",
+      "문자 교집합 기반 번역 유사도 측정",
     ],
     architecture:
-      "front/ → Next.js 14 (Pages Router) + Supabase Auth + Realtime\nback/ → FastAPI + Supabase + Celery + Redis + yt-dlp + ffmpeg",
+      "front/ → Next.js 14 (Pages Router) + Supabase Auth + Realtime\nback/ → FastAPI + Supabase + Soniox API",
+    accordions: [
+      {
+        title: "이용 흐름",
+        blocks: [
+          {
+            type: "text",
+            value: "학습하고자 하는 YouTube 영상 URL을 붙여넣고, 전사 범위를 지정하여 학습 자료 준비를 요청합니다. 전사가 완료될 때까지 진행률을 실시간으로 확인할 수 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 화면 구조1.webp",
+            alt: "Dictector 메인 화면",
+            caption: "YouTube URL을 붙여넣고 전사 범위를 설정하는 메인 화면",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 화면 구조2.webp",
+            alt: "Dictector 영상 상세",
+            caption: "전사 상태 확인 및 학습 모드 선택 화면",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/전사 완료 스크립트.webp",
+            alt: "전사 완료 스크립트",
+            caption: "전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인",
+          },
+          {
+            type: "text",
+            value: "전사가 완료되면 쉐도잉, 딕테이션, 딕테이션+, 직접 번역 중 하나의 모드를 선택하여 학습을 시작합니다. 각 모드는 단계별로 진행되며, 영상 패널에서 지정된 구간만 반복 재생하며 학습합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 학습 모드.webp",
+            alt: "Dictector 학습 모드 선택",
+            caption: "Shadowing / Dictation / Dictation+ / Direct Translation 4가지 모드",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 학습 1단계.webp",
+            alt: "Dictector 학습 1단계",
+            caption: "1단계: 영상 세그먼트 재생 — 해당 구간만 반복 재생하며 듣기",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 학습 2단계.webp",
+            alt: "Dictector 학습 2단계",
+            caption: "2단계: 들은 내용을 입력하고 토큰 단위로 실시간 채점",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 학습 3단계.webp",
+            alt: "Dictector 학습 3단계",
+            caption: "3단계: 채점 결과 확인 — WER 기반 정확도와 틀린 단어 표시",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/dictector 학습 완료.webp",
+            alt: "Dictector 학습 완료",
+            caption: "학습 완료 — CEFR 레벨, 품사 태깅, 정확도 등 학습 결과 요약",
+          },
+          {
+            type: "text",
+            value: "Dictation+ 모드에서는 받아쓰기 완료 후 한국어 번역 단계가 추가됩니다. 입력한 번역과 기준 번역의 유사도를 측정하여 피드백을 제공합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/번역 예시.webp",
+            alt: "번역 유사도 측정 예시",
+            caption: "문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리",
+          },
+          {
+            type: "text",
+            value: "대시보드에서는 학습 통계, 주간 분석, 최근 영상, 복습 항목 등을 확인할 수 있습니다.",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/대시보드.webp",
+            alt: "Dictector 대시보드",
+            caption: "학습 통계 · 주간 분석 · 최근 영상 · 복습 항목을 한 눈에 관리하는 대시보드",
+          },
+        ],
+      },
+      {
+        title: "핵심 기술",
+        blocks: [
+          {
+            type: "text",
+            value: "YouTube 영상 URL을 가공하여 필요한 정보(videoId, duration 등)만 추출한 뒤 학습에 사용합니다. 영상 패널은 YouTube iFrame postMessage 프로토콜로 제어하며, 화질을 144p(tiny)로 낮춰 대역폭을 절감합니다. requestAnimationFrame으로 YouTube 업데이트 사이를 60fps 보간하여 부드러운 타임라인 프로그레스를 표시합니다.",
+          },
+          {
+            type: "text",
+            value: "전사 비용을 절감하기 위해, 이미 전사된 구간은 Supabase에 캐시하여 재사용합니다. 예를 들어 0:00~2:00 전사 요청 시 데이터베이스에 1:00~1:20 기록이 있으면, 해당 구간의 앞뒤 토큰 3개씩을 잘라 순수 데이터 구간을 제외한 나머지만 Soniox API에 전사를 요청한 후 둘을 합성합니다.",
+          },
+          {
+            type: "text",
+            value: "채점은 WER(Word Error Rate) DP 알고리즘을 사용합니다. 사용자 입력과 정답을 토큰 단위로 비교하여, 정확히 일치하면 1점, 편집 거리 1~2의 유사 단어는 0.5점으로 부분점을 부여합니다. 총점/정답 단어 수 × 100으로 점수를 산출하며, 90% 이상이면 정답 처리됩니다. Shadowing 모드에서는 Web Speech Recognition API로 음성을 인식한 뒤 동일한 WER 알고리즘으로 채점합니다.",
+          },
+          {
+            type: "text",
+            value: "번역 유사도 측정은 문자 교집합 방식을 사용합니다. 사용자의 번역을 문자 단위로 분해하고, 기준 번역의 문자 집합과 교집합을 구한 뒤 (교집합 수 / 기준 문자 수) × 100으로 점수를 산출합니다. 80% 이상이면 정답, 50~80%는 핵심 의미 일치, 50% 미만은 재시도를 안내합니다. 기준 번역은 MyMemory API를 활용하며, 한 번 조회한 번역은 useRef로 캐시하여 반복 요청을 방지합니다.",
+          },
+          {
+            type: "text",
+            value: "영상 패널은 YouTube iFrame의 infoDelivery 이벤트로 currentTime을 받아 지정 구간의 시작점(0.25초 버퍼)으로 seek하고, 종료 시점에 도달하면 자동 일시정지합니다. 이를 통해 학습자가 정해진 구간만 반복하며 학습할 수 있도록 제한합니다.",
+          },
+        ],
+      },
+    ],
     links: {
-      github: "https://github.com/SurhommeAI/dictector-web",
       live: "https://dictector-test.vercel.app/",
     },
   },
