@@ -415,6 +415,9 @@ const ProjectDialog = ({ project, onClose }: Props) => {
               </a>
             )}
           </div>
+          {displayed.links.notice && (
+            <p className={styles["dialog-notice"]}>⚠ {displayed.links.notice}</p>
+          )}
         </div>
       )}
     </div>

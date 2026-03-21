@@ -26,7 +26,7 @@ export interface Project {
   highlights: string[];
   architecture?: string;
   accordions?: AccordionTab[];
-  links: { github?: string; live?: string };
+  links: { github?: string; live?: string; notice?: string };
 }
 
 export const projects: Project[] = [
@@ -623,6 +623,7 @@ export const projects: Project[] = [
     ],
     links: {
       live: "https://hairefront.vercel.app/",
+      notice: "Dictector 개발에 의해 ngrok 서버가 종료되어 정상적인 이용이 불가능합니다.",
     },
   },
   {
