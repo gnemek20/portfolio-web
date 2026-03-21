@@ -520,7 +520,7 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "AI 에이전트를 검색하고, 구독한 뒤, 채팅 형태로 실행하는 마켓플레이스입니다. 현재는 Dictector 개발로 인해 ngrok 서버를 종료한 상태이므로, 임시 목업 환경으로 운영 중입니다.",
+            value: "AI 에이전트를 검색하고, 구독한 뒤, 채팅 형태로 실행하는 마켓플레이스입니다. 현재 스크린샷은 목업 데이터 환경에서 촬영되었습니다.",
           },
           {
             type: "image",
@@ -538,11 +538,11 @@ export const projects: Project[] = [
             type: "image",
             value: "/references/haire/haire 화면 구조2.webp",
             alt: "에이전트 상세 페이지",
-            caption: "에이전트 상세 — 구독 및 사용하기 버튼을 통해 채팅 페이지로 이동",
+            caption: "에이전트 상세 — 소개 · 사용 중인 AI · 필요한 인증 · 입력 항목을 확인하고 구독 및 사용하기",
           },
           {
             type: "text",
-            value: "에이전트에 Verification이 필요한 경우, Google OAuth 등의 인증을 거친 뒤 쿼리를 보냅니다. 에이전트의 응답은 WebSocket 스트리밍으로 실시간 수신됩니다.",
+            value: "에이전트에 Verification이 필요한 경우 Google OAuth 등의 인증을 거친 뒤 쿼리를 보냅니다. 에이전트의 응답은 WebSocket 스트리밍으로 실시간 수신됩니다.",
           },
           {
             type: "image",
@@ -562,9 +562,9 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire/에이전트 업로드 예시.webp",
-            alt: "에이전트 업로드",
-            caption: "ZIP 파일을 업로드하여 에이전트를 배포하는 Share Agent 페이지",
+            value: "/references/haire/haire 화면 구조3.webp",
+            alt: "Share Agent 페이지",
+            caption: "Share Agent 페이지 — ZIP 업로드 · YAML Generator · My Agents 목록",
           },
           {
             type: "image",
@@ -580,9 +580,9 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire/haire 화면 구조3.webp",
-            alt: "대시보드",
-            caption: "에이전트 사용량 및 정산 내역을 확인하는 대시보드",
+            value: "/references/haire/에이전트 업로드 예시.webp",
+            alt: "에이전트 배포 완료",
+            caption: "에이전트 배포 완료 — My Agents에 등록된 에이전트와 배포 성공 알림",
           },
         ],
       },
@@ -591,7 +591,7 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "이 프로젝트는 hAIre_Back(유저 인증 서버)과 back(에이전트 관리 서버) 두 개의 백엔드로 운영됩니다. hAIre_Back은 JWT 발급 · Google OAuth · 구독 관리를, back은 에이전트 CRUD · Docker 빌드 · WebSocket 실행 · 시맨틱 검색을 담당합니다.",
+            value: "이 프로젝트는 hAIre_Back(유저 인증 서버)과 haire_backend(에이전트 관리 서버) 두 개의 백엔드로 운영됩니다. hAIre_Back은 JWT 발급 · Google OAuth · 구독 관리를, haire_backend는 에이전트 CRUD · Docker 빌드 · WebSocket 실행 · 시맨틱 검색을 담당합니다.",
           },
           {
             type: "text",
@@ -610,8 +610,13 @@ export const projects: Project[] = [
             value: "인증이 필요한 에이전트는 OAuth 플로우를 거칩니다. 프론트엔드에서 인증 제공자(Google, GitHub 등)의 인증 코드를 받고, 백엔드가 이를 액세스 토큰으로 교환하여 에이전트 실행 시 주입합니다. 인증 상태는 SessionStorage 기반 JWT로 관리됩니다.",
           },
           {
-            type: "text",
-            value: "추후 iptables로 에이전트의 API 실행을 제한하여 OAuth 코드 악용을 방지하고, 구독 방식에서 토큰 사용 방식으로 변경하여 매달 개발자에게 비용을 정산하는 기능을 추가할 예정입니다.",
+            type: "stats",
+            value: "추후 개발 예정",
+            caption: [
+              "보안 강화 — iptables로 에이전트의 API 실행을 제한하여 OAuth 코드 악용 방지",
+              "수익 모델 — 구독 방식에서 토큰 사용 방식으로 변경하여, 매달 에이전트 비용이 개발자에게 정산되는 기능 추가",
+              "멀티 플랫폼 — 에이전트 사용을 웹 뿐만 아닌, 다른 플랫폼에서도 사용할 수 있도록 업데이트",
+            ].join("\n"),
           },
         ],
       },
