@@ -696,13 +696,13 @@ export const projects: Project[] = [
             type: "image",
             value: "/references/dictector/dictector 학습 2단계.webp",
             alt: "Dictector 학습 2단계",
-            caption: "2단계: 들은 내용을 입력하고 토큰 단위로 실시간 채점",
+            caption: "2단계: 채점 결과 확인 — WER 기반 정확도와 틀린 단어 표시",
           },
           {
             type: "image",
             value: "/references/dictector/dictector 학습 3단계.webp",
             alt: "Dictector 학습 3단계",
-            caption: "3단계: 채점 결과 확인 — WER 기반 정확도와 틀린 단어 표시",
+            caption: "3단계: 작문 — 들은 내용을 직접 입력하여 받아쓰기",
           },
           {
             type: "image",
