@@ -7,7 +7,7 @@ const sections = [
   { id: "timeline", label: "Timeline" },
   { id: "awards", label: "Awards" },
   { id: "projects", label: "Projects" },
-
+  { id: "optimizations", label: "Optimizations" },
 ];
 
 const Header = () => {

@@ -7,6 +7,7 @@ import Profile from "@/components/Profile";
 import Timeline from "@/components/Timeline";
 import Awards from "@/components/Awards";
 import Projects from "@/components/Projects";
+import Optimizations from "@/components/Optimizations";
 import ProjectDialog from "@/components/ProjectDialog";
 
 import Contact from "@/components/Contact";
@@ -38,6 +39,7 @@ const Home = () => {
         <Projects onSelect={setSelectedProject} />
       </div>
 
+      <Optimizations />
       <Contact />
       <ProjectDialog
         project={selectedProject}
