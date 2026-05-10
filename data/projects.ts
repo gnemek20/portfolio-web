@@ -152,7 +152,7 @@ export const projects: Project[] = [
     ],
     links: {
       github: "https://github.com/teacher-sora/core-helper-front",
-      live: "https://www.core-helper.site/",
+      live: "https://core-helper-front.vercel.app",
     },
   },
   {
