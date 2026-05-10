@@ -741,7 +741,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector/문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리.png",
+            value: "/references/dictector/딕테이션 채점 화면.png",
             alt: "딕테이션 채점 화면",
             caption: "딕테이션 채점 — 정답과 사용자 답안을 비교하고, 점수 산출 공식을 함께 노출하여 학습자가 채점 근거를 확인할 수 있도록 함",
           },
