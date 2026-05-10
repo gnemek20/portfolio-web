@@ -19,7 +19,7 @@ export interface Project {
   id: string;
   title: string;
   subtitle: string;
-  category: "개인" | "외주" | "팀";
+  category: "개인" | "외주" | "팀" | "창업";
   period?: string;
   description: string;
   tags: string[];
@@ -496,7 +496,7 @@ export const projects: Project[] = [
     title: "Haire",
     subtitle: "AI 에이전트 마켓플레이스",
     period: "2025. 08 — 현재",
-    category: "팀",
+    category: "창업",
     description: [
       "AI 에이전트를 사고 팔 수 있는 중개 마켓플레이스입니다. 대회 출전용 프로토타입으로 시작했으나, 디자인 전면 리뉴얼과 동적 UI·매니페스트 자동 생성 흐름을 도입하면서 실제 런칭 및 창업을 준비 중입니다. 저는 프론트엔드 전체를 담당하면서 DooD 기반 백엔드 일부와 배포·도메인 연동에도 관여하고 있습니다.",
       "",
@@ -659,105 +659,87 @@ export const projects: Project[] = [
     id: "dictector",
     title: "Dictector",
     subtitle: "YouTube 영어 받아쓰기 학습 플랫폼",
-    category: "팀",
+    category: "창업",
+    period: "2026. 02 — 현재",
     description: [
-      "YouTube 영상 링크를 붙여넣고 원하는 구간을 설정하여 영어 받아쓰기(dictation) 학습을 할 수 있는 사이트입니다. 현재 개발 중입니다.",
+      "YouTube 영상 링크 하나로 \"수동적 시청\"을 \"능동적 학습\"으로 바꾸는 영어 학습 플랫폼입니다. 2023년 1차 스텔스 창업 당시 하드웨어 사고로 중단되었던 프로젝트를, 2026년 2월 디자인·로직·인프라를 전면 리뉴얼하여 재개했습니다.",
       "",
-      "learning.tsx 단일 파일 500줄 이상 규모의 학습 엔진이 4가지 학습 모드(Shadowing, Dictation, Dictation+, Direct Translation)를 구현합니다. 토큰 단위 실시간 정답 추적, 문자 정규화를 통한 입력 검증, CEFR 레벨 및 품사 태깅 결과 요약 등 고도화된 학습 플로우를 제공합니다.",
+      "랜딩 페이지에서 URL을 붙여넣으면 Soniox API로 자막을 전사하고, 전사된 스크립트를 기반으로 어휘(Vocab) → 딕테이션(Dictation) → 라이팅(Writing)으로 이어지는 단계형 학습 플로우를 제공합니다. 전사 결과는 Supabase에 토큰 단위로 캐시되어, 동일 영상의 다른 구간 학습 시 이미 전사된 토큰은 재요청 없이 재사용됩니다.",
       "",
-      "Soniox API로 전사된 결과를 Supabase에 캐시하고, 이미 전사된 구간은 제외하여 필요한 범위만 전사 요청하는 비용 절감 로직을 적용했습니다. Supabase Realtime 채널로 전사 진행률을 실시간 폴링합니다.",
+      "이번 리뉴얼에서는 자체 이메일 인증 로그인(Brevo SMTP 6자리 코드), 사용자 대시보드 및 주간 학습 통계 API, 학습 세션 완료 기록(learning_sessions), 인기 영상·좋아요/싫어요·댓글 기능, CEFR 기반 단어장 자동 추출과 한국어 자동 번역(deep-translator) 등 커뮤니티·게이미피케이션 기능이 추가되었습니다. 백엔드는 Fly.io에 배포되었습니다.",
     ].join("\n"),
-    tags: ["Next.js 14", "FastAPI", "Supabase", "Soniox API"],
+    tags: ["Next.js 14", "FastAPI", "Supabase", "Soniox", "Fly.io", "Brevo"],
     highlights: [
-      "4가지 학습 모드 — Shadowing / Dictation / Dictation+ / Direct Translation",
-      "토큰 단위 실시간 정답 추적 + 문자 정규화 입력 검증",
-      "CEFR 레벨 + 품사(POS) 태깅 학습 결과 요약",
-      "전사 비용 절감 — 캐시 구간 제외 후 미전사 범위만 요청",
-      "Supabase Realtime 채널 진행률 실시간 폴링",
-      "WER(Word Error Rate) DP 알고리즘 기반 채점",
-      "문자 교집합 기반 번역 유사도 측정",
+      "URL 한 줄로 시작하는 단계형 학습 — 어휘 → 딕테이션 → 라이팅",
+      "토큰 단위 전사 캐시 — 동일 영상 재학습 시 미전사 구간만 Soniox에 요청",
+      "WER(Word Error Rate) DP 채점 + Shadowing 모드 음성 인식 채점",
+      "문자 교집합 기반 번역 유사도 측정 (80% 이상 정답)",
+      "자체 이메일 인증 로그인 (Brevo SMTP, 6자리 코드)",
+      "대시보드 — 연속 학습일·총 학습 시간·주간 분석·복습 예정",
+      "인기 영상 · 좋아요/싫어요 · 댓글 기반 학습 커뮤니티",
+      "CEFR 단어장 자동 추출 + 한국어 뜻 자동 번역(deep-translator)",
     ],
     architecture:
-      "front/ → Next.js 14 (Pages Router) + Supabase Auth + Realtime\nback/ → FastAPI + Supabase + Soniox API",
+      "front/ → Next.js 14 (Pages Router) + Supabase Auth + Realtime\nback/ → FastAPI + Supabase + Soniox · deep-translator · Brevo SMTP, Fly.io 배포",
     accordions: [
       {
         title: "이용 흐름",
         blocks: [
           {
             type: "text",
-            value: "학습하고자 하는 YouTube 영상 URL을 붙여넣고, 전사 범위를 지정하여 학습 자료 준비를 요청합니다. 전사가 완료될 때까지 진행률을 실시간으로 확인할 수 있습니다.",
+            value: "랜딩 페이지에서 학습하고 싶은 YouTube 영상 URL을 붙여넣고 「AI 학습 시작」을 누르면, 인기 영상과 함께 곧바로 영상 상세 페이지로 진입합니다.",
           },
           {
             type: "image",
-            value: "/references/dictector/dictector 화면 구조1.webp",
-            alt: "Dictector 메인 화면",
-            caption: "YouTube URL을 붙여넣고 전사 범위를 설정하는 메인 화면",
+            value: "/references/dictector-v2/YouTube URL을 붙여넣고 전사 범위를 설정하는 메인 화면.png",
+            alt: "Dictector 랜딩 페이지",
+            caption: "랜딩 페이지 — YouTube URL 입력과 인기 영상 추천이 한 화면에",
+          },
+          {
+            type: "text",
+            value: "영상 상세에서 학습할 구간을 슬라이더로 지정하고, 쉐도잉 / 딕테이션 / 딕테이션+ / 직접 번역 중 하나의 학습 모드를 선택합니다. 학습 자료가 준비되면 전사 진행률을 실시간으로 확인할 수 있습니다.",
           },
           {
             type: "image",
-            value: "/references/dictector/dictector 화면 구조2.webp",
-            alt: "Dictector 영상 상세",
+            value: "/references/dictector-v2/전사 상태 확인 및 학습 모드 선택 화면.png",
+            alt: "전사 상태 확인 및 학습 모드 선택",
             caption: "전사 상태 확인 및 학습 모드 선택 화면",
           },
           {
             type: "image",
-            value: "/references/dictector/전사 완료 스크립트.webp",
-            alt: "전사 완료 스크립트",
-            caption: "전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인",
+            value: "/references/dictector-v2/전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인.png",
+            alt: "전사 완료 후 스크립트 목록",
+            caption: "전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인. 이미 전사된 구간은 \"이미 전사된 구간입니다\" 배너로 캐시 적중을 표시",
           },
           {
             type: "text",
-            value: "전사가 완료되면 쉐도잉, 딕테이션, 딕테이션+, 직접 번역 중 하나의 모드를 선택하여 학습을 시작합니다. 1단계에서는 화면에 표시된 Vocab을 보고 아는지 모르는지 응답하며, 이후 단계에서 영상 패널을 통해 지정 구간을 반복 재생하며 학습합니다.",
+            value: "학습은 어휘(어휘 미리학습) → 딕테이션 → 라이팅의 3단계로 진행됩니다. 각 문장마다 지정 구간을 반복 재생하며, 입력한 답안을 정답과 비교해 토큰 단위로 채점합니다.",
           },
           {
             type: "image",
-            value: "/references/dictector/dictector 학습 모드.webp",
-            alt: "Dictector 학습 모드 선택",
-            caption: "Shadowing / Dictation / Dictation+ / Direct Translation 4가지 모드",
-          },
-          {
-            type: "image",
-            value: "/references/dictector/dictector 학습 1단계.webp",
-            alt: "Dictector 학습 1단계",
-            caption: "1단계: 어휘 확인 — 화면에 표시된 Vocab을 보고 아는지 모르는지 응답",
-          },
-          {
-            type: "image",
-            value: "/references/dictector/dictector 학습 2단계.webp",
-            alt: "Dictector 학습 2단계",
-            caption: "2단계: 채점 결과 확인 — WER 기반 정확도와 틀린 단어 표시",
-          },
-          {
-            type: "image",
-            value: "/references/dictector/dictector 학습 3단계.webp",
-            alt: "Dictector 학습 3단계",
-            caption: "3단계: 작문 — 들은 내용을 직접 입력하여 받아쓰기",
-          },
-          {
-            type: "image",
-            value: "/references/dictector/dictector 학습 완료.webp",
-            alt: "Dictector 학습 완료",
-            caption: "학습 완료 — CEFR 레벨, 품사 태깅, 정확도 등 학습 결과 요약",
+            value: "/references/dictector-v2/문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리.png",
+            alt: "딕테이션 채점 화면",
+            caption: "딕테이션 채점 — 정답과 사용자 답안을 비교하고, 점수 산출 공식을 함께 노출하여 학습자가 채점 근거를 확인할 수 있도록 함",
           },
           {
             type: "text",
-            value: "Dictation+ 모드에서는 받아쓰기 완료 후 한국어 번역 단계가 추가됩니다. 입력한 번역과 기준 번역의 유사도를 측정하여 피드백을 제공합니다.",
+            value: "모든 단계를 마치면 학습 세션이 learning_sessions 테이블에 기록되고, 어휘 / 학습 / 작문 영역별 점수와 종합 점수, 획득 XP가 학습 완료 화면에 요약됩니다.",
           },
           {
             type: "image",
-            value: "/references/dictector/번역 예시.webp",
-            alt: "번역 유사도 측정 예시",
-            caption: "문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리",
+            value: "/references/dictector-v2/학습 완료.png",
+            alt: "학습 완료 화면",
+            caption: "학습 완료 — 어휘·학습·작문 영역별 점수와 종합 점수, 획득 XP를 요약",
           },
           {
             type: "text",
-            value: "대시보드에서는 학습 통계, 주간 분석, 최근 영상, 복습 항목 등을 확인할 수 있습니다.",
+            value: "대시보드에서는 학습 영상 수·총 학습 시간·연속 학습일·학습 단어 수, 주간 분석, 성장 현황(XP 레벨), 최근 학습 영상, 복습 예정 등 개인 학습 데이터를 한 화면에서 관리합니다.",
           },
           {
             type: "image",
-            value: "/references/dictector/대시보드.webp",
+            value: "/references/dictector-v2/대시보드.png",
             alt: "Dictector 대시보드",
-            caption: "학습 통계 · 주간 분석 · 최근 영상 · 복습 항목을 한 눈에 관리하는 대시보드",
+            caption: "대시보드 — 연속 학습일·주간 분석·성장 현황·최근 학습 영상·복습 예정을 한 눈에",
           },
         ],
       },
@@ -766,23 +748,23 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "YouTube 영상 URL을 가공하여 필요한 정보(videoId, duration 등)만 추출한 뒤 학습에 사용합니다. 영상 패널은 YouTube iFrame postMessage 프로토콜로 제어하며, 화질을 144p(tiny)로 낮춰 대역폭을 절감합니다. requestAnimationFrame으로 YouTube 업데이트 사이를 60fps 보간하여 부드러운 타임라인 프로그레스를 표시합니다.",
+            value: "YouTube 영상 URL은 list/start 등 불필요한 파라미터를 정규화 단계에서 제거한 뒤 videoId / duration만 추출해 사용합니다. 영상 패널은 YouTube iFrame postMessage 프로토콜로 제어하며, 화질을 144p(tiny)로 강제해 대역폭을 절감합니다. requestAnimationFrame으로 YouTube 업데이트 사이를 60fps 보간하여 부드러운 타임라인 프로그레스를 표시합니다.",
           },
           {
             type: "text",
-            value: "전사 비용을 절감하기 위해, 이미 전사된 구간은 Supabase에 캐시하여 재사용합니다. 예를 들어 0:00~2:00 전사 요청 시 데이터베이스에 1:00~1:20 기록이 있으면, 해당 구간의 앞뒤 토큰 3개씩을 잘라 순수 데이터 구간을 제외한 나머지만 Soniox API에 전사를 요청한 후 둘을 합성합니다.",
+            value: "전사 비용 절감을 위해 이미 전사된 토큰은 Supabase의 script_lines 테이블에 캐시하여 재사용합니다. 새 구간 요청 시 캐시된 토큰의 앞뒤 3개를 잘라낸 순수 데이터 구간을 제외하고, 미전사 범위만 Soniox API에 위임한 뒤 응답을 합성합니다. (※ 토큰이 비어있는 레거시 라인은 캐시에서 제외하는 회귀 버그를 별도 보고서로 정리하여 수정 우선순위를 관리하고 있습니다.)",
           },
           {
             type: "text",
-            value: "채점은 WER(Word Error Rate) DP 알고리즘을 사용합니다. 사용자 입력과 정답을 토큰 단위로 비교하여, 정확히 일치하면 1점, 편집 거리 1~2의 유사 단어는 0.5점으로 부분점을 부여합니다. 총점/정답 단어 수 × 100으로 점수를 산출하며, 90% 이상이면 정답 처리됩니다. Shadowing 모드에서는 Web Speech Recognition API로 음성을 인식한 뒤 동일한 WER 알고리즘으로 채점합니다.",
+            value: "딕테이션 채점은 WER(Word Error Rate) DP 알고리즘을 사용합니다. 사용자 입력과 정답을 토큰 단위로 비교하여 완전 일치는 1점, 치환 + 편집 거리 1~2는 0.5점, 그 외는 0점으로 부분 점수를 부여합니다. round((획득 점수 / 정답 단어 수) × 100)으로 정확도를 산출하며, 90% 이상이면 정답 처리됩니다. Shadowing 모드에서는 Web Speech Recognition API로 음성을 인식한 뒤 동일한 WER 알고리즘으로 채점합니다.",
           },
           {
             type: "text",
-            value: "번역 유사도 측정은 문자 교집합 방식을 사용합니다. 사용자의 번역을 문자 단위로 분해하고, 기준 번역의 문자 집합과 교집합을 구한 뒤 (교집합 수 / 기준 문자 수) × 100으로 점수를 산출합니다. 80% 이상이면 정답, 50~80%는 핵심 의미 일치, 50% 미만은 완전 오답 처리됩니다. 기준 번역은 MyMemory API를 활용하며, 한 번 조회한 번역은 useRef로 캐시하여 반복 요청을 방지합니다.",
+            value: "번역 유사도는 문자 교집합 방식으로 측정합니다. 사용자 번역을 문자 단위로 분해하고 기준 번역의 문자 집합과 교집합을 구한 뒤 (교집합 수 / 기준 문자 수) × 100으로 점수를 산출합니다. 80% 이상이면 정답, 50~80%는 핵심 의미 일치, 50% 미만은 오답으로 처리합니다. 기준 번역은 MyMemory API로 조회한 뒤 useRef로 캐시하여 반복 요청을 방지합니다.",
           },
           {
             type: "text",
-            value: "영상 패널은 YouTube iFrame의 infoDelivery 이벤트로 currentTime을 받아 지정 구간의 시작점(0.25초 버퍼)으로 seek하고, 종료 시점에 도달하면 자동 일시정지합니다. 이를 통해 학습자가 정해진 구간만 반복하며 학습할 수 있도록 제한합니다.",
+            value: "자체 로그인은 Brevo SMTP로 6자리 인증 코드를 발송하는 이메일 인증 방식이며, JWT 검증 코드를 InvalidTokenError 기반으로 간소화했습니다. CORS는 Vercel 도메인을 허용하고, 500 에러에도 CORS 헤더가 항상 따라가도록 글로벌 예외 핸들러를 적용했습니다. 백엔드는 Dockerfile + fly.toml 구성으로 Fly.io에 배포되어 있습니다.",
           },
         ],
       },
