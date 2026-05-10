@@ -8,6 +8,7 @@ interface Props {
 }
 
 const categories: { key: Project["category"]; label: string }[] = [
+  { key: "창업", label: "창업 프로젝트" },
   { key: "개인", label: "개인 프로젝트" },
   { key: "외주", label: "외주 프로젝트" },
   { key: "팀", label: "팀 프로젝트" },
