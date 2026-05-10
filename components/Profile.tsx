@@ -24,14 +24,15 @@ const Profile = () => {
     <section ref={ref} className={clsx(styles["profile"], { [styles["visible"]]: inView })} id="profile">
       <p className={styles["section-label"]}>Profile</p>
       <p className={styles["bio"]}>
-        선린인터넷고등학교를 졸업한 프론트엔드 엔지니어입니다.
-        화면에 보이게 만드는 것을 넘어, 빠르고 안정적이며 확장 가능한 웹을 만듭니다.
+        선린인터넷고등학교를 졸업한 AI 프로덕트 엔지니어입니다.
+        제품 시나리오 설계 · UI 디자인 · 풀스택 연동 · 배포 인프라까지 한 사람이 책임지며,
+        AI 시스템을 사용자에게 의미 있는 형태로 전달하는 인터페이스를 만듭니다.
       </p>
 
       <div className={styles["info-grid"]}>
         <div className={styles["info-item"]}>
           <span className={styles["info-label"]}>포지션</span>
-          <span className={styles["info-value"]}>프론트엔드 엔지니어</span>
+          <span className={styles["info-value"]}>AI 프로덕트 엔지니어</span>
         </div>
         <div className={styles["info-item"]}>
           <span className={styles["info-label"]}>병역</span>
