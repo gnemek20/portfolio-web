@@ -51,7 +51,7 @@ const Hero = () => {
     <section className={styles["hero"]}>
       <div className={styles["stage"]}>
         <p className={clsx(styles["label"], { [styles["play"]]: step >= 0 })}>
-          Frontend Engineer
+          AI Product Engineer
         </p>
 
         <div className={clsx(styles["line-reveal"], { [styles["play"]]: step >= 1 })}>
@@ -66,13 +66,13 @@ const Hero = () => {
         <div className={clsx(styles["accent-bar"], { [styles["play"]]: step >= 3 })} />
 
         <p className={clsx(styles["tagline"], { [styles["play"]]: step >= 4 })}>
-          <TypingText text="최적화와 디테일을 코드로 증명합니다" play={step >= 5} />
+          <TypingText text="AI와 사람을 잇는 인터페이스를 설계합니다" play={step >= 5} />
         </p>
 
         <div className={clsx(styles["badge-row"], { [styles["play"]]: step >= 6 })}>
-          <span className={styles["badge"]}>React</span>
-          <span className={styles["badge"]}>Next.js</span>
-          <span className={styles["badge"]}>TypeScript</span>
+          <span className={styles["badge"]}>AI Interfaces</span>
+          <span className={styles["badge"]}>Full-Stack</span>
+          <span className={styles["badge"]}>Deploy Infra</span>
         </div>
 
         <div className={clsx(styles["scroll-hint"], { [styles["play"]]: step >= 7 })}>
