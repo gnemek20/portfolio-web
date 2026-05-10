@@ -707,6 +707,12 @@ export const projects: Project[] = [
           },
           {
             type: "image",
+            value: "/references/dictector/4가지 학습 모드.png",
+            alt: "4가지 학습 모드",
+            caption: "4가지 학습 모드 — 쉐도잉 · 딕테이션 · 딕테이션+ · 직접 번역",
+          },
+          {
+            type: "image",
             value: "/references/dictector/전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인.png",
             alt: "전사 완료 후 스크립트 목록",
             caption: "전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인. 이미 전사된 구간은 \"이미 전사된 구간입니다\" 배너로 캐시 적중을 표시",
@@ -714,6 +720,24 @@ export const projects: Project[] = [
           {
             type: "text",
             value: "학습은 어휘(어휘 미리학습) → 딕테이션 → 라이팅의 3단계로 진행됩니다. 각 문장마다 지정 구간을 반복 재생하며, 입력한 답안을 정답과 비교해 토큰 단위로 채점합니다.",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/1단계.png",
+            alt: "1단계 — 어휘 미리학습",
+            caption: "1단계 — 어휘 미리학습: 학습 구간에 등장하는 단어를 미리 익히는 단계",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/2단계.png",
+            alt: "2단계 — 딕테이션",
+            caption: "2단계 — 딕테이션: 구간을 반복 재생하며 들은 내용을 받아쓰는 단계",
+          },
+          {
+            type: "image",
+            value: "/references/dictector/3단계.png",
+            alt: "3단계 — 라이팅",
+            caption: "3단계 — 라이팅: 해당 구간의 스크립트를 직접 번역하는 단계",
           },
           {
             type: "image",
