@@ -1,4 +1,4 @@
-export interface ContentBlock {
+﻿export interface ContentBlock {
   type: "text" | "image" | "stats" | "gif" | "table";
   value: string;
   alt?: string;
@@ -495,14 +495,14 @@ export const projects: Project[] = [
     id: "haire",
     title: "Haire",
     subtitle: "AI 에이전트 마켓플레이스",
-    period: "2025. 08 — 현재",
+    period: "2025. 10 — 현재",
     category: "창업",
     description: [
-      "AI 에이전트를 사고 팔 수 있는 중개 마켓플레이스입니다. 대회 출전용 프로토타입으로 시작했으나, 디자인 전면 리뉴얼과 동적 UI·매니페스트 자동 생성 흐름을 도입하면서 실제 런칭 및 창업을 준비 중입니다. 저는 프론트엔드 전체를 담당하면서 DooD 기반 백엔드 일부와 배포·도메인 연동에도 관여하고 있습니다.",
+      "AI 에이전트를 사고 팔 수 있는 중개 마켓플레이스입니다. 대회 출전용 프로토타입에서 출발해, 매니페스트 기반 동적 UI 와 자동 매니페스트 생성 흐름을 갖춘 형태로 다듬어 실제 런칭 및 창업을 준비하고 있습니다. 저는 프론트엔드 전체를 담당하면서 DooD 기반 백엔드 일부와 배포·도메인 연동에도 관여하고 있습니다.",
       "",
       "백엔드는 DooD(Docker-outside-of-Docker) 아키텍처로, 플랫폼 컨테이너가 호스트 Docker 소켓을 마운트해 에이전트 컨테이너를 형제(sibling)로 띄웁니다. 각 에이전트는 zip 업로드 → 자동 Dockerfile 생성 → 이미지 빌드 → Supabase pgvector 임베딩 등록까지 자동 파이프라인으로 배포되며, 5종 이벤트(output / input_request / result / error / done)의 WebSocket 프로토콜로 실시간 실행됩니다.",
       "",
-      "프론트엔드 리뉴얼의 핵심은 매니페스트 기반 동적 UI입니다. 기존에는 에이전트마다 입력 폼·출력 화면을 손으로 만들어야 했지만, 이제는 `haire.yaml` 의 `inputs[]` 와 `outputs.view_type` 만 보고 폼·결과 렌더러를 자동 생성합니다. 신규 에이전트가 등록되어도 프론트엔드 코드 수정이 0줄입니다.",
+      "프론트엔드의 핵심은 매니페스트 기반 동적 UI입니다. 에이전트마다 입력 폼·출력 화면을 손으로 만들지 않고, `haire.yaml` 의 `inputs[]` 와 `outputs.view_type` 만 보고 폼·결과 렌더러를 자동 생성합니다. 신규 에이전트가 등록되어도 프론트엔드 코드 수정이 0줄입니다.",
       "",
       "개발자 흐름도 단순화했습니다. ZIP 업로드 → precheck 자동 실행 → AI 가 코드를 분석해 haire.yaml 매니페스트를 자동 생성 → 직관적인 에디터에서 JSON 형태로 다듬는 4단계로, 대시보드 한 페이지에서 끝납니다.",
     ].join("\n"),
@@ -525,17 +525,17 @@ export const projects: Project[] = [
         blocks: [
           {
             type: "text",
-            value: "리뉴얼된 랜딩 페이지에서는 추천 에이전트를 한 눈에 탐색할 수 있습니다. 상단 검색창에 키워드를 입력하면, 백엔드의 LLM 이 검색 의도를 시맨틱 검색에 적합하도록 재작성한 뒤 OpenAI 임베딩 → Supabase pgvector 코사인 유사도로 상위 에이전트를 반환합니다.",
+            value: "랜딩 페이지에서는 추천 에이전트를 한 눈에 탐색할 수 있습니다. 상단 검색창에 키워드를 입력하면, 백엔드의 LLM 이 검색 의도를 시맨틱 검색에 적합하도록 재작성한 뒤 OpenAI 임베딩 → Supabase pgvector 코사인 유사도로 상위 에이전트를 반환합니다.",
           },
           {
             type: "image",
-            value: "/references/haire-v2/랜딩 페이지 — AI 에이전트 추천 및 탐색.png",
-            alt: "Haire 리뉴얼 랜딩 페이지",
-            caption: "리뉴얼된 랜딩 페이지 — AI 에이전트 추천 및 탐색",
+            value: "/references/haire/랜딩 페이지 — AI 에이전트 추천 및 탐색.png",
+            alt: "Haire 랜딩 페이지",
+            caption: "랜딩 페이지 — AI 에이전트 추천 및 탐색",
           },
           {
             type: "image",
-            value: "/references/haire-v2/검색어를 입력하면 시맨틱 검색으로 적합한 에이전트를 추천.png",
+            value: "/references/haire/검색어를 입력하면 시맨틱 검색으로 적합한 에이전트를 추천.png",
             alt: "시맨틱 검색 결과",
             caption: "검색어를 입력하면 LLM 재작성 + pgvector 코사인 유사도로 적합한 에이전트를 추천",
           },
@@ -545,13 +545,13 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire-v2/에이전트 상세 — 소개 · 사용 중인 AI · 필요한 인증 · 입력 항목을 확인하고 구독 및 사용하기.png",
+            value: "/references/haire/에이전트 상세 — 소개 · 사용 중인 AI · 필요한 인증 · 입력 항목을 확인하고 구독 및 사용하기.png",
             alt: "에이전트 상세 페이지",
             caption: "에이전트 상세 — 소개 · 사용 중인 AI · 필요한 인증 · 입력 항목을 한 화면에서 확인",
           },
           {
             type: "image",
-            value: "/references/haire-v2/매니페스트에 따라 다른 동적 폼.png",
+            value: "/references/haire/매니페스트에 따라 다른 동적 폼.png",
             alt: "매니페스트별 동적 폼",
             caption: "동일한 컴포넌트가 매니페스트의 inputs[] 만 바꿔주면 에이전트마다 다른 입력 폼을 자동 생성",
           },
@@ -561,7 +561,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire-v2/WebSocket 스트리밍으로 에이전트 응답을 실시간 수신하는 채팅 화면.png",
+            value: "/references/haire/WebSocket 스트리밍으로 에이전트 응답을 실시간 수신하는 채팅 화면.png",
             alt: "WebSocket 스트리밍 채팅",
             caption: "WebSocket 5-이벤트 프로토콜로 에이전트 응답을 실시간 수신하는 채팅 화면",
           },
@@ -571,13 +571,13 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire-v2/Share Agent 페이지 — ZIP 업로드 · YAML Generator · My Agents 목록.png",
+            value: "/references/haire/Share Agent 페이지 — ZIP 업로드 · YAML Generator · My Agents 목록.png",
             alt: "Share Agent 페이지",
             caption: "Share Agent 페이지 — ZIP 업로드 · YAML Generator · My Agents 목록을 한 화면에서 관리",
           },
           {
             type: "image",
-            value: "/references/haire-v2/업로드한 코드를 AI가 분석하여 haire.yaml 매니페스트를 자동 생성.png",
+            value: "/references/haire/업로드한 코드를 AI가 분석하여 haire.yaml 매니페스트를 자동 생성.png",
             alt: "haire.yaml 자동 생성",
             caption: "업로드한 코드를 AI 가 분석하여 haire.yaml 매니페스트를 자동 생성",
           },
@@ -587,19 +587,19 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/haire-v2/생성된 매니페스트를 에디터에서 편집.png",
+            value: "/references/haire/생성된 매니페스트를 에디터에서 편집.png",
             alt: "매니페스트 에디터",
             caption: "생성된 매니페스트를 에디터에서 편집 — JSON 트리 형태로 한 항목씩 안전하게 수정",
           },
           {
             type: "image",
-            value: "/references/haire-v2/에디터에서 동적 폼 편집.png",
+            value: "/references/haire/에디터에서 동적 폼 편집.png",
             alt: "동적 폼 편집",
             caption: "에디터에서 동적 폼 편집 — 입력/출력 스키마를 폼 단위로 다듬으며 실시간 미리보기",
           },
           {
             type: "image",
-            value: "/references/haire-v2/에이전트 배포 완료 — My Agents에 등록된 에이전트와 배포 성공 알림.png",
+            value: "/references/haire/에이전트 배포 완료 — My Agents에 등록된 에이전트와 배포 성공 알림.png",
             alt: "에이전트 배포 완료",
             caption: "배포 완료 — My Agents 목록에 등록된 에이전트와 배포 성공 알림",
           },
@@ -638,7 +638,7 @@ export const projects: Project[] = [
           },
           {
             type: "stats",
-            value: "리뉴얼로 얻은 것 / 다음 단계",
+            value: "제품적 가치 / 다음 단계",
             caption: [
               "프론트엔드 코드 수정 0줄 — inputs[] / view_type 만 추가하면 신규 에이전트가 즉시 마켓에 등장",
               "사용자 흐름 단축 — ZIP 업로드 한 번으로 precheck → 매니페스트 자동 생성까지 도달",
@@ -662,11 +662,11 @@ export const projects: Project[] = [
     category: "창업",
     period: "2026. 02 — 현재",
     description: [
-      "YouTube 영상 링크 하나로 \"수동적 시청\"을 \"능동적 학습\"으로 바꾸는 영어 학습 플랫폼입니다. 2023년 1차 스텔스 창업 당시 하드웨어 사고로 중단되었던 프로젝트를, 2026년 2월 디자인·로직·인프라를 전면 리뉴얼하여 재개했습니다.",
+      "YouTube 영상 링크 하나로 \"수동적 시청\"을 \"능동적 학습\"으로 바꾸는 영어 학습 플랫폼입니다. 2023년 1차 스텔스 창업 당시에는 영상을 디스크에 저장한 뒤 오디오를 추출하던 파이프라인이 하드웨어 한계에 부딪혀 중단되었지만, 외부 전사 API(Soniox)에 URL 을 위임하고 토큰 단위 결과를 메모리·DB 캐시로 재사용하는 방식으로 우회 경로를 찾아 다시 개발을 시작했습니다.",
       "",
       "랜딩 페이지에서 URL을 붙여넣으면 Soniox API로 자막을 전사하고, 전사된 스크립트를 기반으로 어휘(Vocab) → 딕테이션(Dictation) → 라이팅(Writing)으로 이어지는 단계형 학습 플로우를 제공합니다. 전사 결과는 Supabase에 토큰 단위로 캐시되어, 동일 영상의 다른 구간 학습 시 이미 전사된 토큰은 재요청 없이 재사용됩니다.",
       "",
-      "이번 리뉴얼에서는 자체 이메일 인증 로그인(Brevo SMTP 6자리 코드), 사용자 대시보드 및 주간 학습 통계 API, 학습 세션 완료 기록(learning_sessions), 인기 영상·좋아요/싫어요·댓글 기능, CEFR 기반 단어장 자동 추출과 한국어 자동 번역(deep-translator) 등 커뮤니티·게이미피케이션 기능이 추가되었습니다. 백엔드는 Fly.io에 배포되었습니다.",
+      "자체 이메일 인증 로그인(Brevo SMTP 6자리 코드), 사용자 대시보드 및 주간 학습 통계 API, 학습 세션 완료 기록(learning_sessions), 인기 영상·좋아요/싫어요·댓글 기능, CEFR 기반 단어장 자동 추출과 한국어 자동 번역(deep-translator) 등 커뮤니티·게이미피케이션 기능을 갖추고 있으며, 백엔드는 Fly.io 에 배포되어 있습니다.",
     ].join("\n"),
     tags: ["Next.js 14", "FastAPI", "Supabase", "Soniox", "Fly.io", "Brevo"],
     highlights: [
@@ -691,7 +691,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector-v2/YouTube URL을 붙여넣고 전사 범위를 설정하는 메인 화면.png",
+            value: "/references/dictector/YouTube URL을 붙여넣고 전사 범위를 설정하는 메인 화면.png",
             alt: "Dictector 랜딩 페이지",
             caption: "랜딩 페이지 — YouTube URL 입력과 인기 영상 추천이 한 화면에",
           },
@@ -701,13 +701,13 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector-v2/전사 상태 확인 및 학습 모드 선택 화면.png",
+            value: "/references/dictector/전사 상태 확인 및 학습 모드 선택 화면.png",
             alt: "전사 상태 확인 및 학습 모드 선택",
             caption: "전사 상태 확인 및 학습 모드 선택 화면",
           },
           {
             type: "image",
-            value: "/references/dictector-v2/전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인.png",
+            value: "/references/dictector/전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인.png",
             alt: "전사 완료 후 스크립트 목록",
             caption: "전사 완료 후 스크립트 목록 — 각 세그먼트별 타임스탬프와 영어 텍스트 확인. 이미 전사된 구간은 \"이미 전사된 구간입니다\" 배너로 캐시 적중을 표시",
           },
@@ -717,7 +717,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector-v2/문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리.png",
+            value: "/references/dictector/문자 교집합 기반 유사도 측정 — 80% 이상이면 정답 처리.png",
             alt: "딕테이션 채점 화면",
             caption: "딕테이션 채점 — 정답과 사용자 답안을 비교하고, 점수 산출 공식을 함께 노출하여 학습자가 채점 근거를 확인할 수 있도록 함",
           },
@@ -727,7 +727,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector-v2/학습 완료.png",
+            value: "/references/dictector/학습 완료.png",
             alt: "학습 완료 화면",
             caption: "학습 완료 — 어휘·학습·작문 영역별 점수와 종합 점수, 획득 XP를 요약",
           },
@@ -737,7 +737,7 @@ export const projects: Project[] = [
           },
           {
             type: "image",
-            value: "/references/dictector-v2/대시보드.png",
+            value: "/references/dictector/대시보드.png",
             alt: "Dictector 대시보드",
             caption: "대시보드 — 연속 학습일·주간 분석·성장 현황·최근 학습 영상·복습 예정을 한 눈에",
           },
